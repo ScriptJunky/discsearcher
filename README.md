@@ -1,8 +1,12 @@
 # discsearcher
 
 ## COLUMNS
-| Disc | Manufacturer | Disc Type | Distance | HST (High Speed Turn) | LSF (Low Speed Fade) | Net |
-| :-------------: | :----------: | :-----------: | :-----------: | :-----------: | :-----------: | :-----------: |
+
+| Manufacturer | Disc | Disc Type | Distance | HST (High Speed Turn) | LSF (Low Speed Fade) | Net Stability | ??? | Disc Name |  ??? |
+| -------- | --------- | ------- | -------- | --------- | ------- | -------- | -------- | -------- | -------- |
+| Discraft | Buzzz | Mid-Range | 296 | -18% | 23% | 5% | Y | Buzzz | 9-5 |
+| Discraft | Buzzz OS | Mid-Range | 293 | 0% | 58% | 58% | Y | Buzzz OS | 9-3 |
+
 
 ## USAGE
 

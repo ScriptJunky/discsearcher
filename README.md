@@ -2,6 +2,7 @@
 
 ## COLUMNS
 | Disc | Manufacturer | Disc Type | Distance | HST (High Speed Turn) | LSF (Low Speed Fade) | Net |
+| :-------------: | :----------: | :-----------: | :-----------: | :-----------: | :-----------: | :-----------: |
 
 ## USAGE
 

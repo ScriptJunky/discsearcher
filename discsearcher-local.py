@@ -14,17 +14,22 @@ parser.add_argument('--name', help='Disc model or name')
 parser.add_argument('--type', help='Type of disc')
 parser.add_argument('--speed', help='Speed rating')
 parser.add_argument('--glide', help='Glide')
-parser.add_argument('--turn', help='Turn (positive or negative)')
+parser.add_argument('--turn', help='Turn (prefix with negative supported)')
 parser.add_argument('--fade', help='Fade')
+parser.add_argument('--full', action='store_true', help='Print full contents of CSV file')
 args = parser.parse_args()
 
 csv = pd.read_csv('discs.csv', header=0, delimiter=',')
 
-if len(sys.argv) < 2:
-    print(csv)
-    sys.exit()
-
 filters = []
+
+if args.full:
+    print(csv)
+    sys.exit(0)
+
+if len(sys.argv) < 2:
+    parser.print_help(sys.stderr)
+    sys.exit(1)
 
 if args.mfgr:
     filters.append('(csv.Manufacturer == ' + "'" + args.mfgr + "'" + ')')

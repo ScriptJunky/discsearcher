@@ -30,7 +30,8 @@ if len(sys.argv) < 2:
     parser.print_help(sys.stderr)
     sys.exit(1)
 
-if args.mfgr:
+
+if args.mfgr: 
     filters.append('(csv.Manufacturer == ' + "'" + args.mfgr + "'" + ')')
 
 if args.name:

@@ -30,7 +30,7 @@ Aero,Innova,Putter,3,6,-0,0
 Aftermath,Legacy Discs,Distance,13,5,-2,3
 Aftershock,DGA,Midrange,4,3,0,2
 Ahti,Westside,Distance,9,3,0,4
-Albatross,Daredevil,Distance,14,4,0,5
+Albatross,Daredevil Discs,Distance,14,4,0,5
 Alias,Axiom Discs,Midrange,4,4,-1,1
 Alpha,Mint Discs,Fairway,8,4,0,2
 Amp,MVP,Fairway,8,5,-2,1
@@ -78,13 +78,13 @@ Baobab,Above Ground Level,Putter,4,1,1,3
 Bard,Westside,Midrange,5,4,0,3
 Barracuda,Innova,Midrange,5,4,-2,3
 Beast,Innova,Distance,10,5,-2,2
-Beaver,Daredevil,Putter,2,3,0,1
+Beaver,Daredevil Discs,Putter,2,3,0,1
 Bee Line,ABC,Distance,14,5,-3,2
 Beetle,Latitude 64,Putter,1,7,-1,0
 Berg,Kastaplast,Putter,1,1,0,2
 Berserker,Viking,Distance,10,5,-3,2
-Big Foot,Daredevil,Distance,13,5,-2,2
-Bighorn,Daredevil,Putter,2,3,0,1
+Big Foot,Daredevil Discs,Distance,13,5,-2,2
+Bighorn,Daredevil Discs,Putter,2,3,0,1
 Birdie,Innova,Putter,1,2,0,0
 Blaze,Gateway,Fairway,7,5,0,3
 Blitz,Latitude 64,Distance,12,3,0,4
@@ -97,7 +97,7 @@ Boss,Innova,Distance,13,5,-1,3
 Breaker,DGA,Putter,4,3,0,3
 Breakout,Dynamic Discs,Fairway,8,5,-1,2
 Bryce,Latitude 64,Distance,9,6,-2,2
-Buffalo,Daredevil,Distance,9,4,-1,5
+Buffalo,Daredevil Discs,Distance,9,4,-1,5
 Bulldog,Innova,Midrange,4,3,0,2
 Bullfrog,Innova,Putter,3,1,0,1
 Buzzz,Discraft,Midrange,5,4,-1,1
@@ -108,7 +108,7 @@ Caiman,Innova,Midrange,5,2,0,4
 Caltrop,Latitude 64,Putter,2,2,0,2
 Cannon,Legacy Discs,Distance,14,5,-3,3
 Captain,Dynamic Discs,Distance,13,5,-2,2
-Caribou,Daredevil,Midrange,4,5,-3,1
+Caribou,Daredevil Discs,Midrange,4,5,-3,1
 Catalyst,MVP,Distance,13,6,-2,2
 Catapult,Westside,Distance,14,4,-1,3
 CD Craze,Discmania,Distance,10,5,-1,2
@@ -257,10 +257,10 @@ Glide,Discraft,Fairway,6,5,-3,2
 GM Gremlin,Discmania,Midrange,5,4,0,2
 Gobi,Latitude 64,Midrange,6,5,-1,1
 Gou,YiKun,Fairway,8,5,-4,1
-Gray Jay,Daredevil,Distance,14,4,0,5
-Great Horned Owl,Daredevil,Putter,2,3,0,1
+Gray Jay,Daredevil Discs,Distance,14,4,-0,5
+Great Horned Owl,Daredevil Discs,Putter,2,3,0,1
 Griffin,Innova,Midrange,5,3,1,3
-Grizzly,Daredevil,Midrange,4,4,-1,2
+Grizzly,Daredevil Discs,Midrange,4,4,-1,2
 Groove,Innova,Distance,13,6,-2,2
 Grym,Kastaplast,Distance,13,5,-2,2
 Grym X,Kastaplast,Distance,13,5,-1,2
@@ -364,7 +364,7 @@ Mako,Innova,Midrange,4,5,-0,0
 Mako3,Innova,Midrange,5,4,-0,0
 Malta,Discraft,Midrange,5,4,1,3
 Mamba,Innova,Distance,11,6,-5,1
-Mammoth,Daredevil,Distance,9,4,-1,5
+Mammoth,Daredevil Discs,Distance,9,4,-1,5
 Manta,Innova,Midrange,5,5,-3,1
 Mantis,Discraft,Fairway,8,5,-2,2
 Manzanita,Above Ground Level,Putter,3,3,0,2
@@ -383,7 +383,7 @@ MD5,Discmania,Midrange,5,3,0,4
 Medius,Latitude 64,Midrange,5,5,-1,2
 Medusa,Skyquest,Distance,11,5,-2,2
 Mercy,Latitude 64,Putter,2,4,0,1
-Merlin,Daredevil,Distance,14,4,-1,5
+Merlin,Daredevil Discs,Distance,14,4,-1,5
 Meteor,Discraft,Midrange,4,5,-3,1
 Meteor Hammer,YiKun,Putter,2,3,0,0
 Meteorite,Galaxy,Distance,11,3,-1,2
@@ -397,7 +397,7 @@ Monarch,Innova,Distance,10,5,-4,1
 Money,ABC,Putter,2,3,0,2
 Mongoose,Legacy Discs,Distance,9,5,-3,1
 Monster,Innova,Distance,10,3,0,5
-Moose,Daredevil,Midrange,4,5,0,2
+Moose,Daredevil Discs,Midrange,4,5,0,2
 Mortar,Hyzer Bomb,Midrange,5,4,0,3
 Motion,MVP,Distance,9,4,0,4
 Musket,Latitude 64,Distance,10,5,-1,2
@@ -419,7 +419,7 @@ Nuke SS,Discraft,Distance,13,5,-3,3
 O-Lace,Vibram,Distance,13,5,-1,3
 Obex,Vibram,Midrange,5,4,0,3
 Octane,MVP,Distance,13,5,-1,2
-Ogopogo,Daredevil,Distance,9,4,-2,5
+Ogopogo,Daredevil Discs,Distance,9,4,-2,5
 Omega AP,Millennium,Putter,2,3,0,0
 Omega Big Bead,Millennium,Putter,2,3,0,1
 Omega Driver,Millennium,Putter,3,2,0,2
@@ -465,7 +465,7 @@ Pine,Westside,Midrange,5,4,0,2
 Pipeline,DGA,Fairway,8,5,0,2
 Piwakawaka,RPM Discs,Midrange,4,5,0,0
 Plutonium,Element Discs,Putter,3,3,0,1
-Polar Bear,Daredevil,Putter,2,3,-1,1
+Polar Bear,Daredevil Discs,Putter,2,3,-1,1
 Polaris LF,Millennium,Distance,9,5,-2,3
 Polaris LS,Millennium,Fairway,8,5,-2,1
 Polecat,Innova,Putter,1,3,0,0
@@ -478,7 +478,7 @@ Proof,Dynamic Discs,Midrange,5,5,-3,1
 Prophecy,Gateway,Midrange,5,5,0,2
 Prowler,Legacy Discs,Putter,2,3,0,2
 Proxy,Axiom Discs,Putter,3,3,-1,1
-Pteranodon,Daredevil,Midrange,4,6,-2,1
+Pteranodon,Daredevil Discs,Midrange,4,6,-2,1
 Ptero,Reptilian Discs,Fairway,7,5,-1,1
 Pulse,Discraft,Distance,11,4,0,3
 Punisher,Discraft,Distance,12,5,-0,3
@@ -535,7 +535,7 @@ Ruby,Latitude 64,Putter,3,5,-3,1
 Rune,Viking,Putter,2,4,0,0
 Runway,Streamline,Putter,5,4,0,4
 Ruru,RPM Discs,Putter,3,3,0,1
-Sabertooth,Daredevil,Distance,9,4,0,5
+Sabertooth,Daredevil Discs,Distance,9,4,-0,5
 Sabre,Gateway,Fairway,8,5,-1,1
 Sail,DGA,Distance,11,6,-3,1
 Saint,Latitude 64,Distance,9,7,-2,2
@@ -543,7 +543,7 @@ Saint Pro,Latitude 64,Fairway,8,6,0,3
 Sampo,Westside,Distance,10,4,-1,2
 Samurai,Gateway,Distance,13,6,-2,1
 Sarek,Latitude 64,Putter,2,4,0,2
-Sasquatch,Daredevil,Distance,12,5,-5,1
+Sasquatch,Daredevil Discs,Distance,12,5,-5,1
 Savant,Innova,Distance,9,5,-1,2
 Scale,Reptilian Discs,Putter,2,1,0,3
 Scorpion,Innova,Midrange,5,5,-1,2
@@ -614,7 +614,7 @@ Suspect,Dynamic Discs,Midrange,4,3,0,3
 Swan 1 Reborn,Westside,Putter,3,3,-3,0
 Swan 2,Westside,Putter,3,3,-1,0
 Swift,AquaFlight Discs,Fairway,8,5,-3,1
-Swift Fox,Daredevil,Fairway,7,5,-3,1
+Swift Fox,Daredevil Discs,Fairway,7,5,-3,1
 Switch,MVP,Fairway,7,5,-2,1
 Sword,Westside,Distance,12,5,-1,2
 Sycamore,Above Ground Level,Fairway,7,5,0,1
@@ -648,7 +648,7 @@ Thrasher,Discraft,Distance,12,5,-3,2
 Thrill,Axiom Discs,Distance,11,4,-0,3
 Thunder God Thor,Viking,Distance,14,5,0,2
 Thunderbird,Innova,Distance,9,5,-0,2
-Timberwolf,Daredevil,Fairway,8,5,-1,1
+Timberwolf,Daredevil Discs,Fairway,8,5,-1,1
 Titan,Prodiscus,Distance,10,4,0,3
 Titanic,DGA,Putter,2,2,0,2
 TL,Innova,Fairway,7,5,-0,1
@@ -702,7 +702,7 @@ VRoc,Innova,Midrange,4,4,0,2
 Vulcan,Innova,Distance,13,5,-4,2
 Vulture,Discraft,Distance,10,5,-0,2
 Wahoo,Innova,Distance,12,6,-2,2
-Walrus,Daredevil,Midrange,4,5,0,3
+Walrus,Daredevil Discs,Midrange,4,5,0,3
 War Horse,Westside,Distance,13,4,0,4
 Warden,Dynamic Discs,Putter,2,4,0,1
 Warhog,Innova,Putter,3,3,0,1
@@ -722,10 +722,10 @@ Wings,YiKun,Midrange,3,3,0,2
 Witness,Dynamic Discs,Fairway,8,6,-3,1
 Wizard,Gateway,Putter,2,3,0,2
 Wolf,Innova,Midrange,4,3,-4,1
-Wolverine,Daredevil,Fairway,8,5,-2,2
+Wolverine,Daredevil Discs,Fairway,8,5,-2,2
 Wombat,Innova,Midrange,5,6,-1,1
 Wombat3,Innova,Midrange,5,6,-1,0
-Woodchuck,Daredevil,Putter,2,3,-1,0
+Woodchuck,Daredevil Discs,Putter,2,3,-1,0
 World,Westside,Distance,14,4,-1,3
 Wraith,Innova,Distance,11,5,-1,3
 Wrath,Axiom Discs,Distance,10,4,-1,2
@@ -743,7 +743,7 @@ XS,Discraft,Fairway,8,5,-2,3
 Xtreme,Discraft,Fairway,6,3,1,4
 XXX,Latitude 64,Fairway,7,3,0,4
 Yao,YiKun,Midrange,4,4,0,2
-Yeti,Daredevil,Distance,13,5,-3,1
+Yeti,Daredevil Discs,Distance,13,5,-3,1
 Yeti Aviar,Innova,Putter,2,3,0,1
 Zephyr,Innova,Putter,2,3,-0,0
 Zeus,Discraft,Distance,12,5,-1,3

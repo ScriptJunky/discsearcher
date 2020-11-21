@@ -67,3 +67,14 @@ It pulls all of the flight chart data from a local CSV file that has values sour
 346  Macana  Latitude 64  Putter    2.0      5   0.0   1.0
 ➜~/git/discsearcher(master✗)»
 ```
+
+#### AS OF 11/21/2020, COMPOUND SEARCHES ARE SUPPORTED!
+```
+➜~/git/discsearcher(master✗)» python3 discsearcher-local.py --turn -4 --turn -5 --speed 11 --speed 10 --fade 2                                                                                                                          [16:39:53]
+         Name      Manufacturer      Type  Speed  Glide  Turn  Fade
+29   Aquarius   Millenium Discs  Distance     10      5    -4   2.0
+461   Nemesis      Legacy Discs  Distance     10      6    -4   2.0
+462   Nemesis  Kaufinator Discs  Distance     10      6    -4   2.0
+805       Wei       Yikun Discs  Distance     10      5    -5   2.0
+➜~/git/discsearcher(master✗)»
+```

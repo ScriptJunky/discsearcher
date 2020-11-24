@@ -9,7 +9,37 @@ pd.set_option('display.max_rows', None)
 pd.set_option('display.max_colwidth', None)
 pd.set_option('display.expand_frame_repr', False)
 
-parser = argparse.ArgumentParser()
+regexaddendum='''
+REGEX USAGE:
+=======================================================================================================================================================================
+When using regex, the following style is acceptable:
+
+^[1-9]:        Match all values beginning with '-' and the second character is between 1 and 9.
+(Buzzz|Manta): Match both the Buzzz and Manta discs.
+
+WILDCARD is NOT supported.
+=======================================================================================================================================================================
+
+EXAMPLE:
+=======================================================================================================================================================================
+➜~/git/discsearcher(master✗)» python3 discsearcher-local.py --mfgrrx '(MVP|Axiom Discs|Streamline Discs)' --type Distance --speedrx '(10|11|12)' --turnrx '^-[1-4]'                                                                                       [13:15:33]
+         Name      Manufacturer      Type  Speed  Glide  Turn  Fade
+324   Impulse               MVP  Distance     10      5    -3   1.0
+326   Inertia               MVP  Distance     10      5    -2   2.0
+327  Insanity       Axiom Discs  Distance     10      5    -2   1.0
+482   Orbital               MVP  Distance     12      5    -4   1.0
+522    Photon               MVP  Distance     12      5    -1   3.0
+726     Tesla               MVP  Distance     10      5    -1   2.0
+747     Trace  Streamline Discs  Distance     11      5    -1   2.0
+770    Vanish       Axiom Discs  Distance     12      5    -3   2.0
+783     Virus       Axiom Discs  Distance     10      5    -3   1.0
+803      Wave               MVP  Distance     11      5    -2   2.0
+819     Wrath       Axiom Discs  Distance     10      4    -1   2.0
+➜~/git/discsearcher(master✗)»
+========================================================================================================================================================================
+'''
+
+parser = argparse.ArgumentParser(description=regexaddendum, formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument('--full', action='store_true', help='Show details for all known discs.')
 parser.add_argument('--manufacturers', action='store_true', help='provide list of all known disc manufacturers.')
 parser.add_argument('--discnames', action='store_true', help='provide list of all known disc names.')

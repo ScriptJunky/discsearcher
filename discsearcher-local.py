@@ -1,5 +1,6 @@
 import re
 import sys
+import exrex
 import pandas as pd
 import argparse
 
@@ -9,18 +10,51 @@ pd.set_option('display.max_colwidth', None)
 pd.set_option('display.expand_frame_repr', False)
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--mfgr', action='append', help='Manufacturer of the disc')
-parser.add_argument('--name', action='append', help='Disc model or name')
-parser.add_argument('--type', action='append', help='Type of disc')
-parser.add_argument('--speed', action='append', help='Speed rating')
-parser.add_argument('--glide', action='append', help='Glide')
-parser.add_argument('--turn', action='append', help='Turn (prefix with negative supported)')
-parser.add_argument('--fade', action='append', help='Fade')
-parser.add_argument('--full', action='store_true', help='Print full contents of CSV file')
+parser.add_argument('--full', action='store_true', help='Show details for all known discs.')
+parser.add_argument('--manufacturers', action='store_true', help='provide list of all known disc manufacturers.')
+parser.add_argument('--discnames', action='store_true', help='provide list of all known disc names.')
+parser.add_argument('--mfgr', action='append', help='Filter discs on manufacturer.')
+parser.add_argument('--name', action='append', help='Filter discs by name.')
+parser.add_argument('--type', action='append', help='Filter discs by type (Distance, Fairway, Midrange, or Putter).')
+parser.add_argument('--speed', action='append', help='Filter discs by speed.')
+parser.add_argument('--glide', action='append', help='Filter discs by glide.')
+parser.add_argument('--turn', action='append', help='Filter discs by turn -- (Prepend value with "-").')
+parser.add_argument('--fade', action='append', help='Filter discs by fade.')
+parser.add_argument('--mfgrrx', help='Use regex to filter discs by manufacturer.')
+parser.add_argument('--namerx', help='Use regex to filter discs by name.')
+parser.add_argument('--typerx', help='Use regex to filter discs by type.')
+parser.add_argument('--speedrx', help='Use regex to filter discs by speed.')
+parser.add_argument('--gliderx', help='Use regex to filter discs by glide.')
+parser.add_argument('--turnrx', help='Use regex to filter discs by turn.')
+parser.add_argument('--faderx', help='Use regex to filter discs by fade.')
 args = parser.parse_args()
 
 csv = pd.read_csv('discs.csv', header=0, delimiter=',')
 
+if args.full:
+    print(csv)
+    sys.exit(0)
+
+if args.manufacturers:
+    manufacturer_list = csv['Manufacturer'].unique()
+    manufacturer_list.sort()
+    for m in manufacturer_list:
+        print(m)
+    sys.exit(0)
+
+if args.discnames:
+    discnames_list = csv['Name'].unique()
+    discnames_list.sort()
+    for dn in discnames_list:
+        print(dn)
+    sys.exit(0)
+
+if len(sys.argv) < 2:
+    parser.print_help(sys.stderr)
+    sys.exit(1)
+
+
+mfgrfilters = []
 namefilters = []
 typefilters = []
 speedfilters = []
@@ -28,15 +62,54 @@ glidefilters = []
 turnfilters = []
 fadefilters = []
 
+mfgrrxfilters = []
+namerxfilters = []
+typerxfilters = []
+speedrxfilters = []
+gliderxfilters = []
+turnrxfilters = []
+faderxfilters = []
+
 finalfilter = []
 
-if args.full:
-    print(csv)
-    sys.exit(0)
+if args.mfgrrx:
+    args.mfgrrx = list(exrex.generate(fr'{args.mfgrrx}'))
+    mfgrrxfilters = f'csv.Manufacturer.isin({args.mfgrrx})'
+    finalfilter.append(mfgrrxfilters)
 
-if len(sys.argv) < 2:
-    parser.print_help(sys.stderr)
-    sys.exit(1)
+if args.namerx:
+    args.namerx = list(exrex.generate(fr'{args.namerx}'))
+    namerxfilters = f'csv.Name.isin({args.namerx})'
+    finalfilter.append(namerxfilters)
+
+if args.typerx:
+    args.typerx = list(exrex.generate(fr'{args.typerx}'))
+    typerxfilters = f'csv.Type.isin({args.typerx})'
+    finalfilter.append(typerxfilters)
+
+if args.speedrx:
+    args.speedrx = list(exrex.generate(fr'{args.speedrx}'))    
+    speedrxfilters = f'csv.Speed.isin({args.speedrx})'
+    speedrxfilters = re.sub(r"'", r"", speedrxfilters)
+    finalfilter.append(speedrxfilters)
+
+if args.gliderx:
+    args.gliderx = list(exrex.generate(fr'{args.gliderx}'))
+    gliderxfilters = f'csv.Glide.isin({args.gliderx})'
+    gliderxfilters = re.sub(r"'", r"", gliderxfilters)
+    finalfilter.append(gliderxfilters)
+
+if args.turnrx:
+    args.turnrx = list(exrex.generate(fr'{args.turnrx}'))
+    turnrxfilters = f'csv.Turn.isin({args.turnrx})'
+    turnrxfilters = re.sub(r"'", r"", turnrxfilters)
+    finalfilter.append(turnrxfilters)
+
+if args.faderx:
+    args.faderx = list(exrex.generate(fr'{args.faderx}'))
+    faderxfilters = f'csv.Fade.isin({args.faderx})'
+    faderxfilters = re.sub(r"'", r"", faderxfilters)
+    finalfilter.append(faderxfilters)
 
 if args.mfgr:
     mfgrfilters = f'csv.Manufacturer.isin({args.mfgr})'

@@ -9,7 +9,7 @@ everything = []
 for i in mfgrs:
     everything.append('starting ' + i + ('\n'))
     idurl = requests.get(url + i).text
-    soupf = soup(idurl, 'html')
+    soupf = soup(idurl, 'lxml')
     everything.append(soupf.find_all('h4'))
     everything.append('closing ' + i + ('\n'))
 

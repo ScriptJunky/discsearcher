@@ -22,19 +22,15 @@ WILDCARD is NOT supported, and literal '.' characters MUST be escaped!
 
 EXAMPLE:
 =======================================================================================================================================================================
-➜~/git/discsearcher(master✗)» python3 discsearcher-local.py --mfgrrx '(MVP|Axiom Discs|Streamline Discs)' --speedrx '(10|11|12)' --turnrx '^-[1-4]'
-         Name      Manufacturer      Type  Speed  Glide  Turn  Fade
-324   Impulse               MVP  Distance     10      5    -3   1.0
-326   Inertia               MVP  Distance     10      5    -2   2.0
-327  Insanity       Axiom Discs  Distance     10      5    -2   1.0
-482   Orbital               MVP  Distance     12      5    -4   1.0
-522    Photon               MVP  Distance     12      5    -1   3.0
-726     Tesla               MVP  Distance     10      5    -1   2.0
-747     Trace  Streamline Discs  Distance     11      5    -1   2.0
-770    Vanish       Axiom Discs  Distance     12      5    -3   2.0
-783     Virus       Axiom Discs  Distance     10      5    -3   1.0
-803      Wave               MVP  Distance     11      5    -2   2.0
-819     Wrath       Axiom Discs  Distance     10      4    -1   2.0
+➜~/git/discsearcher(master✗)» python3 discsearcher-local.py --mfgrrx '^(MVP|Axiom|Streamline)' --speedrx '(10|11|12)\.[0-9]' --turnrx '^-[1-4]\.[0-9]'
+    Manufacturer     Name  Speed  Glide  Turn  Fade
+18         Axiom   Vanish   11.5    5.0  -2.7   1.9
+617          MVP  Impulse   10.0    4.9  -2.9   1.1
+618          MVP  Inertia   10.3    4.9  -1.9   2.0
+623          MVP  Orbital   11.5    5.0  -4.4   0.9
+625          MVP   Photon   11.5    4.9  -1.0   2.7
+629          MVP     Wave   11.4    5.1  -1.9   1.8
+767   Streamline    Trace   11.0    5.0  -1.0   2.0
 ➜~/git/discsearcher(master✗)»
 ========================================================================================================================================================================
 '''

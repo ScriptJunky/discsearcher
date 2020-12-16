@@ -17,12 +17,12 @@ When using regex, the following style is acceptable:
 ^[1-9]:        Match all values beginning with '-' and the second character is between 1 and 9.
 (Buzzz|Manta): Match both the Buzzz and Manta discs.
 
-WILDCARD is NOT supported.
+WILDCARD is NOT supported, and literal '.' characters MUST be escaped!
 =======================================================================================================================================================================
 
 EXAMPLE:
 =======================================================================================================================================================================
-➜~/git/discsearcher(master✗)» python3 discsearcher-local.py --mfgrrx '(MVP|Axiom Discs|Streamline Discs)' --type Distance --speedrx '(10|11|12)' --turnrx '^-[1-4]'                                                                                       [13:15:33]
+➜~/git/discsearcher(master✗)» python3 discsearcher-local.py --mfgrrx '(MVP|Axiom Discs|Streamline Discs)' --speedrx '(10|11|12)' --turnrx '^-[1-4]'
          Name      Manufacturer      Type  Speed  Glide  Turn  Fade
 324   Impulse               MVP  Distance     10      5    -3   1.0
 326   Inertia               MVP  Distance     10      5    -2   2.0
@@ -45,14 +45,12 @@ parser.add_argument('--manufacturers', action='store_true', help='provide list o
 parser.add_argument('--discnames', action='store_true', help='provide list of all known disc names.')
 parser.add_argument('--mfgr', action='append', help='Filter discs on manufacturer.')
 parser.add_argument('--name', action='append', help='Filter discs by name.')
-parser.add_argument('--type', action='append', help='Filter discs by type (Distance, Fairway, Midrange, or Putter).')
 parser.add_argument('--speed', action='append', help='Filter discs by speed.')
 parser.add_argument('--glide', action='append', help='Filter discs by glide.')
 parser.add_argument('--turn', action='append', help='Filter discs by turn -- (Prepend value with "-").')
 parser.add_argument('--fade', action='append', help='Filter discs by fade.')
 parser.add_argument('--mfgrrx', help='Use regex to filter discs by manufacturer.')
 parser.add_argument('--namerx', help='Use regex to filter discs by name.')
-parser.add_argument('--typerx', help='Use regex to filter discs by type.')
 parser.add_argument('--speedrx', help='Use regex to filter discs by speed.')
 parser.add_argument('--gliderx', help='Use regex to filter discs by glide.')
 parser.add_argument('--turnrx', help='Use regex to filter discs by turn.')
@@ -112,11 +110,6 @@ if args.namerx:
     namerxfilters = f'csv.Name.isin({args.namerx})'
     finalfilter.append(namerxfilters)
 
-if args.typerx:
-    args.typerx = list(exrex.generate(fr'{args.typerx}'))
-    typerxfilters = f'csv.Type.isin({args.typerx})'
-    finalfilter.append(typerxfilters)
-
 if args.speedrx:
     args.speedrx = list(exrex.generate(fr'{args.speedrx}'))    
     speedrxfilters = f'csv.Speed.isin({args.speedrx})'
@@ -148,10 +141,6 @@ if args.mfgr:
 if args.name:
     namefilters = f'csv.Name.isin({args.name})'
     finalfilter.append(namefilters)
-
-if args.type:
-    typefilters = f'csv.Type.isin({args.type})'
-    finalfilter.append(typefilters)
 
 if args.speed:
     speedfilters = f'csv.Speed.isin({args.speed})'

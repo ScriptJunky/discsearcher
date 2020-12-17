@@ -1,13 +1,53 @@
-import re
-import sys
-import exrex
-import pandas as pd
 import argparse
+import exrex
+import numpy as np
+import os
+import pandas as pd
+import re
+import requests
+import sys
+import time
+from bs4 import BeautifulSoup as soup
 
-pd.set_option('display.max_columns', None)
-pd.set_option('display.max_rows', None)
-pd.set_option('display.max_colwidth', None)
-pd.set_option('display.expand_frame_repr', False)
+
+def csvgenerator():
+    url = 'https://infinitediscs.com'
+
+    mfgrs = []
+    mfgrnames = []
+
+    mainpage = requests.get(url).text
+    soupf = soup(mainpage, 'lxml')
+
+    for i in soupf.find_all('a', attrs={'href': re.compile("/category/")}):
+        mfgrs.append(i)
+
+    for m in mfgrs:
+        m = str(m).split('"')
+        mfgrnames.append(m[1])
+
+    mfgrnames = np.unique(mfgrnames)
+
+    df = pd.DataFrame(columns=['Name', 'Manufacturer', 'Speed', 'Glide', 'Turn', 'Fade'])
+
+    for i in mfgrnames:
+        idurl = requests.get(url + i).text
+        soupf = soup(idurl, 'lxml')
+        fixeditems = re.sub(r'\r\n.*pull-left', r'', str(soupf.find_all('h4')))
+        fixeditems2 = fixeditems.split(',')
+        fixeditems2 = [o for o in fixeditems2 if re.search('</small></h4>', o)]
+        fixeditems2 = [re.sub('"><small>', ',', o) for o in fixeditems2]
+        fixeditems2 = [re.sub('</small></h4>', '', o) for o in fixeditems2]
+        fixeditems2 = [re.sub(r'<h4>\s+', '', o) for o in fixeditems2]
+        fixeditems2 = [re.sub('/', ',', o) for o in fixeditems2]
+        fixeditems2 = [re.sub(r'^\s+', '', o) for o in fixeditems2]
+        for each in fixeditems2:
+            each = f'{i.replace("/category/", "")},{each}'
+            each = list(each.split(','))
+            print(each)
+            df = df.append(pd.DataFrame([each], columns=['Name', 'Manufacturer', 'Speed', 'Glide', 'Turn', 'Fade']), ignore_index=True)
+
+    df.to_csv('discs.csv', index=False)
 
 regexaddendum='''
 REGEX USAGE:
@@ -37,8 +77,9 @@ EXAMPLE:
 
 parser = argparse.ArgumentParser(description=regexaddendum, formatter_class=argparse.RawTextHelpFormatter)
 parser.add_argument('--full', action='store_true', help='Show details for all known discs.')
-parser.add_argument('--manufacturers', action='store_true', help='provide list of all known disc manufacturers.')
-parser.add_argument('--discnames', action='store_true', help='provide list of all known disc names.')
+parser.add_argument('--manufacturers', action='store_true', help='Provide list of all known disc manufacturers.')
+parser.add_argument('--discnames', action='store_true', help='Provide list of all known disc names.')
+parser.add_argument('--update', action='store_true', help='Trigger a manual update of discs.csv file.')
 parser.add_argument('--mfgr', action='append', help='Filter discs on manufacturer.')
 parser.add_argument('--name', action='append', help='Filter discs by name.')
 parser.add_argument('--speed', action='append', help='Filter discs by speed.')
@@ -53,7 +94,30 @@ parser.add_argument('--turnrx', help='Use regex to filter discs by turn.')
 parser.add_argument('--faderx', help='Use regex to filter discs by fade.')
 args = parser.parse_args()
 
+
+if not os.path.exists('discs.csv'):
+    print('The discs.csv file is missing! Generating a new copy......')
+    csvgenerator()
+    exit(1)
+
+if time.time()-os.path.getctime('discs.csv') > 2629743:
+    print('The discs.csv file is more than 30 days old! Generating a new copy......')
+    csvgenerator()
+    sys.exit(1)
+
+if args.update:
+    print('The discs.csv file will now be updated......')
+    csvgenerator()
+    sys.exit(0)
+
+
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_colwidth', None)
+pd.set_option('display.expand_frame_repr', False)
+
 csv = pd.read_csv('discs.csv', header=0, delimiter=',')
+
 
 if args.full:
     print(csv)

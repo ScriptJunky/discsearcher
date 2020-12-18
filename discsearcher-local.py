@@ -28,7 +28,7 @@ def csvgenerator():
 
     mfgrnames = np.unique(mfgrnames)
 
-    df = pd.DataFrame(columns=['Name', 'Manufacturer', 'Speed', 'Glide', 'Turn', 'Fade'])
+    df = pd.DataFrame(columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fade'])
 
     for i in mfgrnames:
         idurl = requests.get(url + i).text
@@ -45,7 +45,7 @@ def csvgenerator():
             each = f'{i.replace("/category/", "")},{each}'
             each = list(each.split(','))
             print(each)
-            df = df.append(pd.DataFrame([each], columns=['Name', 'Manufacturer', 'Speed', 'Glide', 'Turn', 'Fade']), ignore_index=True)
+            df = df.append(pd.DataFrame([each], columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fade']), ignore_index=True)
 
     df.to_csv('discs.csv', index=False)
 

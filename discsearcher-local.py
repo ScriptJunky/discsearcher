@@ -9,10 +9,9 @@ import sys
 import time
 from bs4 import BeautifulSoup as soup
 
+url = 'https://infinitediscs.com'
 
 def csvgenerator():
-    url = 'https://infinitediscs.com'
-
     mfgrs = []
     mfgrnames = []
 
@@ -118,6 +117,7 @@ pd.set_option('display.expand_frame_repr', False)
 
 csv = pd.read_csv('discs.csv', header=0, delimiter=',')
 
+csv['Url'] = url + '/' + csv['Manufacturer'] + '-' + csv['Name'].replace(regex={r' ': '-', r"'": '', r'-$': ''})
 
 if args.full:
     print(csv)

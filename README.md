@@ -4,7 +4,7 @@
 
 ##### Standard Queries
 ```
-➜~/git/discsearcher(master✗)» python3 discsearcher-local.py --turn -2.0 --mfgr Discraft
+➜~/git/discsearcher(master✗)» python3 discsearcher.py --turn -2.0 --mfgr Discraft
     Manufacturer     Name  Speed  Glide  Turn  Fade
 145     Discraft  Spectra   11.8    4.9  -2.0   2.0
 149     Discraft  Wildcat   11.0    5.0  -2.0   3.0
@@ -17,7 +17,7 @@
 
 ##### RegEx Queries
 ```
-➜~/git/discsearcher(master✗)» python3 discsearcher-local.py --mfgrrx '^(Axiom|MVP)' --turnrx '^-2\.[0-9]'
+➜~/git/discsearcher(master✗)» python3 discsearcher.py --mfgrrx '^(Axiom|MVP)' --turnrx '^-2\.[0-9]'
     Manufacturer        Name  Speed  Glide  Turn  Fade
 11         Axiom      Excite   13.9    5.3  -2.2   2.0
 16         Axiom    Tenacity   13.0    5.0  -2.4   2.0
@@ -33,7 +33,7 @@
 
 ##### Compound Queries
 ```
-➜~/git/discsearcher(master✗)» python3 discsearcher-local.py --turnrx '^-2\.[0-9]' --mfgr Discraft --mfgr Innova
+➜~/git/discsearcher(master✗)» python3 discsearcher.py --turnrx '^-2\.[0-9]' --mfgr Discraft --mfgr Innova
     Manufacturer        Name  Speed  Glide  Turn  Fade
 131     Discraft  Avenger SS    9.8    4.9  -2.9   1.0
 133     Discraft    Crank SS   12.6    4.7  -2.8   1.8

@@ -99,7 +99,7 @@ args = parser.parse_args()
 if not os.path.exists('discs.csv'):
     print('The discs.csv file is missing! Generating a new copy......')
     csvgenerator()
-    exit(1)
+    sys.exit(1)
 
 if time.time()-os.path.getctime('discs.csv') > 2629743:
     print('The discs.csv file is more than 30 days old! Generating a new copy......')

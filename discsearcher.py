@@ -10,12 +10,14 @@ import time
 from bs4 import BeautifulSoup as soup
 
 url = 'https://infinitediscs.com'
+header = { 'User-Agent': 'https://bitbucket.org/biscuits/discsearcher/' }
+
 
 def csvgenerator():
     mfgrs = []
     mfgrnames = []
 
-    mainpage = requests.get(url).text
+    mainpage = requests.get(url, headers=header).text
     soupf = soup(mainpage, 'lxml')
 
     for i in soupf.find_all('a', attrs={'href': re.compile("/category/")}):
@@ -30,7 +32,7 @@ def csvgenerator():
     df = pd.DataFrame(columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fade'])
 
     for i in mfgrnames:
-        idurl = requests.get(url + i).text
+        idurl = requests.get(url + i, headers=header).text
         soupf = soup(idurl, 'lxml')
         fixeditems = re.sub(r'\r\n.*pull-left', r'', str(soupf.find_all('h4')))
         fixeditems2 = fixeditems.split(',')

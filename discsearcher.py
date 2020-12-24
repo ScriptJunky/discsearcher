@@ -50,6 +50,11 @@ def csvgenerator():
 
     df.to_csv('discs.csv', index=False)
 
+updateissue='''
+An error occurred in obtaining an updated list of discs.
+Please try running the tool again!
+'''
+
 regexaddendum='''
 REGEX USAGE:
 =======================================================================================================================================================================
@@ -98,19 +103,30 @@ args = parser.parse_args()
 
 if not os.path.exists('discs.csv'):
     print('The discs.csv file is missing! Generating a new copy......')
-    csvgenerator()
-    sys.exit(1)
+    try:
+        csvgenerator()
+        sys.exit(1)
+    except:
+        print(updateissue)
+        sys.exit(1)
 
 if time.time()-os.path.getctime('discs.csv') > 2629743:
     print('The discs.csv file is more than 30 days old! Generating a new copy......')
-    csvgenerator()
-    sys.exit(1)
+    try:
+        csvgenerator()
+        sys.exit(1)
+    except:
+        print(updateissue)
+        sys.exit(1)
 
 if args.update:
     print('The discs.csv file will now be updated......')
-    csvgenerator()
-    sys.exit(0)
-
+    try:
+        csvgenerator()
+        sys.exit(0)
+    except:
+        print(updateissue)
+        sys.exit(1)
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)

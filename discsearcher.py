@@ -10,6 +10,9 @@ import time
 from bs4 import BeautifulSoup as soup
 from tabulate import tabulate
 
+vnum = 20364
+version = f'discsearcher v.{vnum}'
+
 url = 'https://infinitediscs.com'
 referral = '?tag=3c8c6529'
 
@@ -57,74 +60,81 @@ Please try running the tool again!
 
 regexaddendum=f'''
 STANDARD FLAGS:
---full			Print the full listing of discs (and their flight numbers) that Infinite Discs sells.
---manufacturers		Print a list of all disc manufacturers available from Infinite Discs.
---discnames		Print the list of disc names available from Infinite Discs.
---update		Update the local csv file that stores discs, their manufacturers, and their flight numbers.
+--full           Print the full listing of discs (and their flight numbers) that Infinite Discs sells.
+--manufacturers  Print a list of all disc manufacturers available from Infinite Discs.
+--discnames      Print the list of disc names available from Infinite Discs.
+--update         Update the local csv file that stores discs, their manufacturers, and their flight numbers.
+--version        Print version and exit.
 
-FILTERING FLAGS-NORMAL:
---mfgr			Used to include specific manufacturers in the search output 				(--mfgr Innova, for example)
---name			Used to include specific discs in the search output 					(--name Mamba, for example)
---speed			Used to include discs with a specific speed in the search output 			(--speed 10, for example. Will only show 10.0 and not 10.1 - 10.9)
---glide			Used to include discs with a specific glide in the search output 			(--glide 5, for example. Will only show 5.0 and not 5.1 - 5.9)
---turn			Used to include discs with a specific turn in the search output 			(--turn -5, for example. Will only show -5.0 and not -5.1 - -5.9)
---fade			Used to include discs with a specific fade in the search output 			(--fade 3, for example. Will only show 3.0 and not 3.1 - 3.9)
+FILTERING (STANDARD FILTERS):
+--mfgr           Used to include specific manufacturers in the search output        (--mfgr Innova, for example)
+--name           Used to include specific discs in the search output                (--name Mamba, for example)
+--speed          Used to include discs with a specific speed in the search output   (--speed 10, for example. Will only show 10.0 and not 10.1 - 10.9)
+--glide          Used to include discs with a specific glide in the search output   (--glide 5, for example. Will only show 5.0 and not 5.1 - 5.9)
+--turn           Used to include discs with a specific turn in the search output    (--turn -5, for example. Will only show -5.0 and not -5.1 - -5.9)
+--fade           Used to include discs with a specific fade in the search output    (--fade 3, for example. Will only show 3.0 and not 3.1 - 3.9)
 
-FILTERING FLAGS-REGEX:
---mfgrrx		This can be used to search for multiple manufacturers by name, with a single call 	(--mfgrrx '(MVP|Axiom|Streamline)', for example. Only discs made by MVP, Axiom, or Streamline will be matched.)
---namerx		This can be used to search for multiple discs by name, with a single call 		(--namerx '(Wave|Wraith|Aries)', for example. Only the Wave, Wraith, and Aries will be matched.)
---speedrx		This can be used to search for multiple speeds and speed ranges, with a single call     (--speedrx '(10|11)\.[0-9]', for example. Speed between 10.0-11.9 will be matched.)
---gliderx               This can be used to search for multiple glides and glide ranges, with a single call     (--gliderx '[56]\.[0-9]', for example. Glide between 5.0-6.9 will be matched.)
---turnrx                This can be used to search for multiple turn and turn ranges, with a single call        (--turnrx '^-[3-5]\.[0-9]', for example. Turn ratings between -3.0 and -5.9 will be matched.)
---faderx                This can be used to search for multiple fade and fade ranges, with a single call        (--faderx '^-[2-3]\.[0-9]', for example. Fade ratings between -2.0 and -3.9 will be matched.)
-
-REGEX USAGE:
-=======================================================================================================================================================================
-When using regex, the following style is acceptable:
-
-^[1-9]:        Match all values beginning with '-' and the second character is between 1 and 9.
-(Buzzz|Manta): Match both the Buzzz and Manta discs.
-
-WILDCARD is NOT supported, and literal '.' characters MUST be escaped!
-
-MacOS Escape Character: {chr(92)}
-Linux Escape Character: {chr(92)}
-Windows Escape Character: ^
-=======================================================================================================================================================================
+FILTERING (REGULAR EXPRESSIONS):
+--mfgrrx         This can be used to search for multiple manufacturers by name, with a single call    (--mfgrrx '(MVP|Axiom|Streamline)', for example. Only discs made by MVP, Axiom, or Streamline will be matched.)
+--namerx         This can be used to search for multiple discs by name, with a single call            (--namerx '(Wave|Wraith|Aries)', for example. Only the Wave, Wraith, and Aries will be matched.)
+--speedrx        This can be used to search for multiple speeds and speed ranges, with a single call  (--speedrx '(10|11)\.[0-9]', for example. Speed between 10.0-11.9 will be matched.)
+--gliderx        This can be used to search for multiple glides and glide ranges, with a single call  (--gliderx '[56]\.[0-9]', for example. Glide between 5.0-6.9 will be matched.)
+--turnrx         This can be used to search for multiple turn and turn ranges, with a single call     (--turnrx '^-[3-5]\.[0-9]', for example. Turn ratings between -3.0 and -5.9 will be matched.)
+--faderx         This can be used to search for multiple fade and fade ranges, with a single call     (--faderx '^-[2-3]\.[0-9]', for example. Fade ratings between -2.0 and -3.9 will be matched.)
 
 EXAMPLES:
 
-MacOS\Linux
-=======================================================================================================================================================================
-➜~/git/discsearcher(master✗)» python3 discsearcher-local.py --mfgrrx '^(MVP|Axiom|Streamline)' --speedrx '(10|11|12)\.[0-9]' --turnrx '^-[1-4]\.[0-9]'
-    Manufacturer     Name  Speed  Glide  Turn  Fade
-18         Axiom   Vanish   11.5    5.0  -2.7   1.9
-617          MVP  Impulse   10.0    4.9  -2.9   1.1
-618          MVP  Inertia   10.3    4.9  -1.9   2.0
-623          MVP  Orbital   11.5    5.0  -4.4   0.9
-625          MVP   Photon   11.5    4.9  -1.0   2.7
-629          MVP     Wave   11.4    5.1  -1.9   1.8
-767   Streamline    Trace   11.0    5.0  -1.0   2.0
-➜~/git/discsearcher(master✗)»
-========================================================================================================================================================================
+================================================================================================================================
+Filtering - Standard Filters
+================================================================================================================================
+~/git/discsearcher(master)» discsearcher --turn -2 --speed 11
+Manufacturer    Name     Speed    Glide    Turn    Fade    Purchase Url
+--------------  -------  -------  -------  ------  ------  -------------------------------------------------------
+Discraft        Wildcat  11.0     5.0      -2.0    3.0     https://infinitediscs.com/Discraft-Wildcat?tag=3c8c6529
+Salient         Napalm   11.0     5.0      -2.0    2.0     https://infinitediscs.com/Salient-Napalm?tag=3c8c6529
+~/git/discsearcher(master)»
 
-Windows
-=======================================================================================================================================================================
-➜~/git/discsearcher(master✗)» python3 discsearcher-local.py --mfgrrx '(MVP^|Axiom^|Streamline)' --speedrx '(10^|11^|12)\.[0-9]' --turnrx '^-[1-4]\.[0-9]'
-    Manufacturer     Name  Speed  Glide  Turn  Fade
-18         Axiom   Vanish   11.5    5.0  -2.7   1.9
-617          MVP  Impulse   10.0    4.9  -2.9   1.1
-618          MVP  Inertia   10.3    4.9  -1.9   2.0
-623          MVP  Orbital   11.5    5.0  -4.4   0.9
-625          MVP   Photon   11.5    4.9  -1.0   2.7
-629          MVP     Wave   11.4    5.1  -1.9   1.8
-767   Streamline    Trace   11.0    5.0  -1.0   2.0
-➜~/git/discsearcher(master✗)»
-========================================================================================================================================================================
+================================================================================================================================
+Filtering - Regular Expressions
+================================================================================================================================
+~/git/discsearcher(master)» discsearcher --turnrx '^-2\.[0-9]' --speedrx '11\.[0-9]'
+Manufacturer    Name      Speed    Glide    Turn    Fade    Purchase Url
+--------------  --------  -------  -------  ------  ------  -------------------------------------------------------------
+Axiom           Vanish    11.5     5.0      -2.7    1.9     https://infinitediscs.com/Axiom-Vanish?tag=3c8c6529
+Discraft        Spectra   11.8     4.9      -2.0    2.0     https://infinitediscs.com/Discraft-Spectra?tag=3c8c6529
+Discraft        Thrasher  11.9     5.1      -2.8    1.9     https://infinitediscs.com/Discraft-Thrasher?tag=3c8c6529
+Discraft        Wildcat   11.0     5.0      -2.0    3.0     https://infinitediscs.com/Discraft-Wildcat?tag=3c8c6529
+Dynamic-Discs   Renegade  11.0     5.0      -2.1    2.6     https://infinitediscs.com/Dynamic-Discs-Renegade?tag=3c8c6529
+Infinite-Discs  Maya      11.9     5.1      -2.9    1.0     https://infinitediscs.com/Infinite-Discs-Maya?tag=3c8c6529
+Innova          Mystere   11.0     6.0      -2.2    1.9     https://infinitediscs.com/Innova-Mystere?tag=3c8c6529
+Innova          Wahoo     11.9     6.0      -2.1    2.0     https://infinitediscs.com/Innova-Wahoo?tag=3c8c6529
+Millennium      Aries     11.0     6.0      -2.6    1.1     https://infinitediscs.com/Millennium-Aries?tag=3c8c6529
+Salient         Napalm    11.0     5.0      -2.0    2.0     https://infinitediscs.com/Salient-Napalm?tag=3c8c6529
+~/git/discsearcher(master)»
 
+NOTE: You should know the escape character of your OS prior to using regular expression searches.
+NOTE: The common wildcard characters (*|.) are NOT supported, and can cause the tool to fail or crash.
+
+MacOS escape:   {chr(92)}
+Linux escape:   {chr(92)}
+Windows escape: ^
+
+================================================================================================================================
+Filtering - Compound Query
+================================================================================================================================
+~/git/discsearcher(master)» python3 discsearcher.py --turnrx '^-2\.[0-9]' --speedrx '11\.[0-9]' --mfgr Innova --mfgr Discraft
+\Manufacturer    Name      Speed    Glide    Turn    Fade    Purchase Url
+--------------  --------  -------  -------  ------  ------  --------------------------------------------------------
+Discraft        Spectra   11.8     4.9      -2.0    2.0     https://infinitediscs.com/Discraft-Spectra?tag=3c8c6529
+Discraft        Thrasher  11.9     5.1      -2.8    1.9     https://infinitediscs.com/Discraft-Thrasher?tag=3c8c6529
+Discraft        Wildcat   11.0     5.0      -2.0    3.0     https://infinitediscs.com/Discraft-Wildcat?tag=3c8c6529
+Innova          Mystere   11.0     6.0      -2.2    1.9     https://infinitediscs.com/Innova-Mystere?tag=3c8c6529
+Innova          Wahoo     11.9     6.0      -2.1    2.0     https://infinitediscs.com/Innova-Wahoo?tag=3c8c6529
+~/git/discsearcher(master)»
 '''
 
 parser = argparse.ArgumentParser(description=regexaddendum, formatter_class=argparse.RawTextHelpFormatter)
+parser.add_argument('--version', action='store_true', help=argparse.SUPPRESS)
 parser.add_argument('--full', action='store_true', help=argparse.SUPPRESS)
 parser.add_argument('--manufacturers', action='store_true', help=argparse.SUPPRESS)
 parser.add_argument('--discnames', action='store_true', help=argparse.SUPPRESS)
@@ -143,6 +153,9 @@ parser.add_argument('--turnrx', help=argparse.SUPPRESS)
 parser.add_argument('--faderx', help=argparse.SUPPRESS)
 args = parser.parse_args()
 
+if args.version:
+    print(version)
+    sys.exit(0)
 
 if not os.path.exists('discs.csv'):
     print('The discs.csv file is missing! Generating a new copy......')

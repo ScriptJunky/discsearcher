@@ -10,8 +10,14 @@ import time
 from bs4 import BeautifulSoup as soup
 from tabulate import tabulate
 
-vnum = 20364
-version = f'discsearcher v.{vnum}'
+contact = 'discsearcher@icloud.com'
+vnum = 2020.364
+
+version = f'''
+discsearcher v.{vnum}
+\u00A9 2020 - Throw The Roller, LLC.
+{contact}
+'''
 
 url = 'https://infinitediscs.com'
 referral = '?tag=3c8c6529'

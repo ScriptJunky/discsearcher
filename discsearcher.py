@@ -55,7 +55,29 @@ An error occurred in obtaining an updated list of discs.
 Please try running the tool again!
 '''
 
-regexaddendum='''
+regexaddendum=f'''
+STANDARD FLAGS:
+--full			Print the full listing of discs (and their flight numbers) that Infinite Discs sells.
+--manufacturers		Print a list of all disc manufacturers available from Infinite Discs.
+--discnames		Print the list of disc names available from Infinite Discs.
+--update		Update the local csv file that stores discs, their manufacturers, and their flight numbers.
+
+FILTERING FLAGS-NORMAL:
+--mfgr			Used to include specific manufacturers in the search output 				(--mfgr Innova, for example)
+--name			Used to include specific discs in the search output 					(--name Mamba, for example)
+--speed			Used to include discs with a specific speed in the search output 			(--speed 10, for example. Will only show 10.0 and not 10.1 - 10.9)
+--glide			Used to include discs with a specific glide in the search output 			(--glide 5, for example. Will only show 5.0 and not 5.1 - 5.9)
+--turn			Used to include discs with a specific turn in the search output 			(--turn -5, for example. Will only show -5.0 and not -5.1 - -5.9)
+--fade			Used to include discs with a specific fade in the search output 			(--fade 3, for example. Will only show 3.0 and not 3.1 - 3.9)
+
+FILTERING FLAGS-REGEX:
+--mfgrrx		This can be used to search for multiple manufacturers by name, with a single call 	(--mfgrrx '(MVP|Axiom|Streamline)', for example. Only discs made by MVP, Axiom, or Streamline will be matched.)
+--namerx		This can be used to search for multiple discs by name, with a single call 		(--namerx '(Wave|Wraith|Aries)', for example. Only the Wave, Wraith, and Aries will be matched.)
+--speedrx		This can be used to search for multiple speeds and speed ranges, with a single call     (--speedrx '(10|11)\.[0-9]', for example. Speed between 10.0-11.9 will be matched.)
+--gliderx               This can be used to search for multiple glides and glide ranges, with a single call     (--gliderx '[56]\.[0-9]', for example. Glide between 5.0-6.9 will be matched.)
+--turnrx                This can be used to search for multiple turn and turn ranges, with a single call        (--turnrx '^-[3-5]\.[0-9]', for example. Turn ratings between -3.0 and -5.9 will be matched.)
+--faderx                This can be used to search for multiple fade and fade ranges, with a single call        (--faderx '^-[2-3]\.[0-9]', for example. Fade ratings between -2.0 and -3.9 will be matched.)
+
 REGEX USAGE:
 =======================================================================================================================================================================
 When using regex, the following style is acceptable:
@@ -64,6 +86,10 @@ When using regex, the following style is acceptable:
 (Buzzz|Manta): Match both the Buzzz and Manta discs.
 
 WILDCARD is NOT supported, and literal '.' characters MUST be escaped!
+
+MacOS Escape Character: {chr(92)}
+Linux Escape Character: {chr(92)}
+Windows Escape Character: ^
 =======================================================================================================================================================================
 
 EXAMPLES:
@@ -99,22 +125,22 @@ Windows
 '''
 
 parser = argparse.ArgumentParser(description=regexaddendum, formatter_class=argparse.RawTextHelpFormatter)
-parser.add_argument('--full', action='store_true', help='Show details for all known discs.')
-parser.add_argument('--manufacturers', action='store_true', help='Provide list of all known disc manufacturers.')
-parser.add_argument('--discnames', action='store_true', help='Provide list of all known disc names.')
-parser.add_argument('--update', action='store_true', help='Trigger a manual update of discs.csv file.')
-parser.add_argument('--mfgr', action='append', help='Filter discs on manufacturer.')
-parser.add_argument('--name', action='append', help='Filter discs by name.')
-parser.add_argument('--speed', action='append', help='Filter discs by speed.')
-parser.add_argument('--glide', action='append', help='Filter discs by glide.')
-parser.add_argument('--turn', action='append', help='Filter discs by turn -- (Prepend value with "-").')
-parser.add_argument('--fade', action='append', help='Filter discs by fade.')
-parser.add_argument('--mfgrrx', help='Use regex to filter discs by manufacturer.')
-parser.add_argument('--namerx', help='Use regex to filter discs by name.')
-parser.add_argument('--speedrx', help='Use regex to filter discs by speed.')
-parser.add_argument('--gliderx', help='Use regex to filter discs by glide.')
-parser.add_argument('--turnrx', help='Use regex to filter discs by turn.')
-parser.add_argument('--faderx', help='Use regex to filter discs by fade.')
+parser.add_argument('--full', action='store_true', help=argparse.SUPPRESS)
+parser.add_argument('--manufacturers', action='store_true', help=argparse.SUPPRESS)
+parser.add_argument('--discnames', action='store_true', help=argparse.SUPPRESS)
+parser.add_argument('--update', action='store_true', help=argparse.SUPPRESS)
+parser.add_argument('--mfgr', action='append', help=argparse.SUPPRESS)
+parser.add_argument('--name', action='append', help=argparse.SUPPRESS)
+parser.add_argument('--speed', action='append', help=argparse.SUPPRESS)
+parser.add_argument('--glide', action='append', help=argparse.SUPPRESS)
+parser.add_argument('--turn', action='append', help=argparse.SUPPRESS)
+parser.add_argument('--fade', action='append', help=argparse.SUPPRESS)
+parser.add_argument('--mfgrrx', help=argparse.SUPPRESS)
+parser.add_argument('--namerx', help=argparse.SUPPRESS)
+parser.add_argument('--speedrx', help=argparse.SUPPRESS)
+parser.add_argument('--gliderx', help=argparse.SUPPRESS)
+parser.add_argument('--turnrx', help=argparse.SUPPRESS)
+parser.add_argument('--faderx', help=argparse.SUPPRESS)
 args = parser.parse_args()
 
 

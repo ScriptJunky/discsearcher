@@ -8,16 +8,16 @@ import requests
 import sys
 import time
 from bs4 import BeautifulSoup as soup
+from tabulate import tabulate
 
 url = 'https://infinitediscs.com'
-header = { 'User-Agent': 'https://bitbucket.org/biscuits/discsearcher/' }
-
+referral = '?tag=3c8c6529'
 
 def csvgenerator():
     mfgrs = []
     mfgrnames = []
 
-    mainpage = requests.get(url, headers=header).text
+    mainpage = requests.get(url).text
     soupf = soup(mainpage, 'lxml')
 
     for i in soupf.find_all('a', attrs={'href': re.compile("/category/")}):
@@ -32,7 +32,7 @@ def csvgenerator():
     df = pd.DataFrame(columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fade'])
 
     for i in mfgrnames:
-        idurl = requests.get(url + i, headers=header).text
+        idurl = requests.get(url + i).text
         soupf = soup(idurl, 'lxml')
         fixeditems = re.sub(r'\r\n.*pull-left', r'', str(soupf.find_all('h4')))
         fixeditems2 = fixeditems.split(',')
@@ -66,7 +66,9 @@ When using regex, the following style is acceptable:
 WILDCARD is NOT supported, and literal '.' characters MUST be escaped!
 =======================================================================================================================================================================
 
-EXAMPLE:
+EXAMPLES:
+
+MacOS\Linux
 =======================================================================================================================================================================
 ➜~/git/discsearcher(master✗)» python3 discsearcher-local.py --mfgrrx '^(MVP|Axiom|Streamline)' --speedrx '(10|11|12)\.[0-9]' --turnrx '^-[1-4]\.[0-9]'
     Manufacturer     Name  Speed  Glide  Turn  Fade
@@ -79,6 +81,21 @@ EXAMPLE:
 767   Streamline    Trace   11.0    5.0  -1.0   2.0
 ➜~/git/discsearcher(master✗)»
 ========================================================================================================================================================================
+
+Windows
+=======================================================================================================================================================================
+➜~/git/discsearcher(master✗)» python3 discsearcher-local.py --mfgrrx '(MVP^|Axiom^|Streamline)' --speedrx '(10^|11^|12)\.[0-9]' --turnrx '^-[1-4]\.[0-9]'
+    Manufacturer     Name  Speed  Glide  Turn  Fade
+18         Axiom   Vanish   11.5    5.0  -2.7   1.9
+617          MVP  Impulse   10.0    4.9  -2.9   1.1
+618          MVP  Inertia   10.3    4.9  -1.9   2.0
+623          MVP  Orbital   11.5    5.0  -4.4   0.9
+625          MVP   Photon   11.5    4.9  -1.0   2.7
+629          MVP     Wave   11.4    5.1  -1.9   1.8
+767   Streamline    Trace   11.0    5.0  -1.0   2.0
+➜~/git/discsearcher(master✗)»
+========================================================================================================================================================================
+
 '''
 
 parser = argparse.ArgumentParser(description=regexaddendum, formatter_class=argparse.RawTextHelpFormatter)
@@ -133,9 +150,9 @@ pd.set_option('display.max_rows', None)
 pd.set_option('display.max_colwidth', None)
 pd.set_option('display.expand_frame_repr', False)
 
-csv = pd.read_csv('discs.csv', header=0, delimiter=',')
+csv = pd.read_csv('discs.csv', header=0,  delimiter=',')
 
-csv['Url'] = url + '/' + csv['Manufacturer'] + '-' + csv['Name'].replace(regex={r' ': '-', r"'": '', r'\+': ''})
+csv['Url'] = url + '/' + csv['Manufacturer'] + '-' + csv['Name'].replace(regex={r' ': '-', r"'": '', r'\+': ''}) + referral
 
 if args.full:
     print(csv)
@@ -242,6 +259,6 @@ if args.fade:
 
 finalfilter = ' & '.join(finalfilter)
 
-newcsv = 'print(csv[' + finalfilter + '])'
+newcsv = 'print(tabulate(csv[' + finalfilter + '], showindex=False, headers=csv.columns))'
 
 exec(newcsv)

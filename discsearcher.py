@@ -259,6 +259,6 @@ if args.fade:
 
 finalfilter = ' & '.join(finalfilter)
 
-newcsv = 'print(tabulate(csv[' + finalfilter + '], showindex=False, headers=csv.columns))'
+newcsv = 'print(tabulate(csv[' + finalfilter + '], disable_numparse=True, showindex=False, headers=csv.columns))'
 
 exec(newcsv)

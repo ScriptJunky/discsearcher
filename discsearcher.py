@@ -152,7 +152,7 @@ pd.set_option('display.expand_frame_repr', False)
 
 csv = pd.read_csv('discs.csv', header=0,  delimiter=',')
 
-csv['Url'] = url + '/' + csv['Manufacturer'] + '-' + csv['Name'].replace(regex={r' ': '-', r"'": '', r'\+': ''}) + referral
+csv['Purchase Url'] = url + '/' + csv['Manufacturer'] + '-' + csv['Name'].replace(regex={r' ': '-', r"'": '', r'\+': ''}) + referral
 
 if args.full:
     print(csv)

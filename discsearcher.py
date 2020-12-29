@@ -14,7 +14,7 @@ contact = 'discsearcher@icloud.com'
 vnum = 2020.364
 
 version = f'''
-discsearcher v.{vnum}
+discsearcher v{vnum}
 \u00A9 2020 - Throw The Roller, LLC.
 {contact}
 '''

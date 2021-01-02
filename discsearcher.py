@@ -57,6 +57,7 @@ def csvgenerator():
             print(each)
             df = df.append(pd.DataFrame([each], columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fade']), ignore_index=True)
 
+    df['Purchase Url'] = url + '/' + df['Manufacturer'] + '-' + df['Name'].replace(regex={r' ': '-', r"'": '', r'\+': ''}) + referral
     df.to_csv('discs.csv', index=False)
 
 updateissue='''
@@ -196,8 +197,6 @@ pd.set_option('display.max_colwidth', None)
 pd.set_option('display.expand_frame_repr', False)
 
 csv = pd.read_csv('discs.csv', header=0,  delimiter=',')
-
-csv['Purchase Url'] = url + '/' + csv['Manufacturer'] + '-' + csv['Name'].replace(regex={r' ': '-', r"'": '', r'\+': ''}) + referral
 
 if args.full:
     print(csv)

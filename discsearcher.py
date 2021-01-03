@@ -57,7 +57,41 @@ def csvgenerator():
             print(each)
             df = df.append(pd.DataFrame([each], columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fade']), ignore_index=True)
 
+    df['Diameter'] = None
+    df['Height'] = None
+    df['Rim Depth'] = None
+    df['Rim Width'] = None
+
+#    for index, row in df.iterrows():
+#        discpage = requests.get(f"{url}/{df['Manufacturer']}-{df['Name']}").text
+#        soupf = soup(discpage, 'lxml')
+#        diameter = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblDiameter'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+#        height = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblHeight'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+#        rimdepth = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblRimDepth'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+#        rimwidth = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblRimWidth'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+#        each = []
+#        each.append(diameter)
+#        each.append(height)
+#        each.append(rimdepth)
+#        each.append(rimwidth)
+#        df.append(pd.DataFrame([each], columns=['Diameter', 'Height', 'Rim Depth', 'Rim Width']))
+
+
     df['Purchase Url'] = url + '/' + df['Manufacturer'] + '-' + df['Name'].replace(regex={r' ': '-', r"'": '', r'\+': ''}) + referral
+
+    for each in df['Purchase Url']:
+        discpage = requests.get(each).text
+        soupf = soup(discpage, 'lxml')
+        diameter = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblDiameter'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+        df.append(pd.DataFrame([diameter], columns=['Diameter']))
+        height = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblHeight'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+        df.append(pd.DataFrame([height], columns=['Height']))
+        rimdepth = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblRimDepth'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+        df.append(pd.DataFrame([rimdepth], columns=['Rim Depth']))
+        rimwidth = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblRimWidth'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+        df.append(pd.DataFrame([rimwidth], columns=['Rim Width']))
+        print(df)
+
     df.to_csv('discs.csv', index=False)
 
 updateissue='''
@@ -164,14 +198,16 @@ if args.version:
     print(version)
     sys.exit(0)
 
-if not os.path.exists('discs.csv'):
-    print('The discs.csv file is missing! Generating a new copy......')
-    try:
-        csvgenerator()
-    except:
-        print(updateissue)
-        sys.exit(1)
-    sys.exit(0)
+csvgenerator()
+
+#if not os.path.exists('discs.csv'):
+#    print('The discs.csv file is missing! Generating a new copy......')
+#    try:
+#        csvgenerator()
+#    except:
+#        print(updateissue)
+#        sys.exit(1)
+#    sys.exit(0)
 
 if time.time()-os.path.getctime('discs.csv') > 2629743:
     print('The discs.csv file is more than 30 days old! Generating a new copy......')

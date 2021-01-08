@@ -5,10 +5,13 @@ import os
 import pandas as pd
 import re
 import requests
+import socket
 import sys
 import time
 from bs4 import BeautifulSoup as soup
 from tabulate import tabulate
+
+socket.setdefaulttimeout(300)
 
 contact = 'discsearcher@icloud.com'
 vnum = 2020.364
@@ -38,7 +41,7 @@ def csvgenerator():
 
     mfgrnames = np.unique(mfgrnames)
 
-    df = pd.DataFrame(columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fade'])
+    df = pd.DataFrame(columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fade', 'Diameter', 'Height', 'Rim Depth', 'Rim Width'])
 
     for i in mfgrnames:
         idurl = requests.get(url + i).text
@@ -54,43 +57,51 @@ def csvgenerator():
         for each in fixeditems2:
             each = f'{i.replace("/category/", "")},{each}'
             each = list(each.split(','))
+            if each[1] == 'CD':
+                each[1] = 'CD-Craze'
+            if each[1] == 'DD':
+                each[1] = 'DD-Hysteria'
+            if each[1] == 'DD2':
+                each[1] = 'DD2-Frenzy'
+            if each[1] == 'DD3-':
+                each[1] = 'DD3'
+            if each[1] == 'Enigma':
+                each[1] = 'Evolution-Enigma'
+            if each[1] == 'PD':
+                each[1] = 'PD-Freak'
+            if each[1] == 'PD2':
+                each[1] = 'PD2-Chaos'
+            if each[1] == 'TD':
+                each[1] = 'TD-Rush'
+            if each[1] == 'MD2':
+                each[1] = 'MD2-Fiend'
+            if each[1] == 'FL':
+                each[1] = 'Firebird-FL'
+            if each[1] == 'KC-Aviar':
+                each[1] = 'Aviar-KC-Pro'
+            if each[1] == 'Luan':
+                each[1] = 'Lu'
+            if each[1] == 'Claws':
+                each[1] = 'Talon-(Claws)'
+            name = re.sub(r' ', '-', each[1])
+            name = re.sub(r"'", '', name)
+            name = re.sub(r'\+$', '-', name)
+            dimurl = url + '/' + each[0] + '-' + name
+            discpage = requests.get(dimurl).text
+            print(name, dimurl)
+            soupf = soup(discpage, 'lxml')
+            diameter = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblDiameter'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+            each.append(diameter)
+            height = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblHeight'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+            each.append(height)
+            rimdepth = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblRimDepth'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+            each.append(rimdepth)
+            rimwidth = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblRimWidth'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+            each.append(rimwidth)
             print(each)
-            df = df.append(pd.DataFrame([each], columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fade']), ignore_index=True)
-
-    df['Diameter'] = None
-    df['Height'] = None
-    df['Rim Depth'] = None
-    df['Rim Width'] = None
-
-#    for index, row in df.iterrows():
-#        discpage = requests.get(f"{url}/{df['Manufacturer']}-{df['Name']}").text
-#        soupf = soup(discpage, 'lxml')
-#        diameter = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblDiameter'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
-#        height = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblHeight'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
-#        rimdepth = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblRimDepth'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
-#        rimwidth = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblRimWidth'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
-#        each = []
-#        each.append(diameter)
-#        each.append(height)
-#        each.append(rimdepth)
-#        each.append(rimwidth)
-#        df.append(pd.DataFrame([each], columns=['Diameter', 'Height', 'Rim Depth', 'Rim Width']))
-
+            df = df.append(pd.DataFrame([each], columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fade', 'Diameter', 'Height', 'Rim Depth', 'Rim Width']), ignore_index=True)
 
     df['Purchase Url'] = url + '/' + df['Manufacturer'] + '-' + df['Name'].replace(regex={r' ': '-', r"'": '', r'\+': ''}) + referral
-
-    for each in df['Purchase Url']:
-        discpage = requests.get(each).text
-        soupf = soup(discpage, 'lxml')
-        diameter = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblDiameter'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
-        df.append(pd.DataFrame([diameter], columns=['Diameter']))
-        height = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblHeight'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
-        df.append(pd.DataFrame([height], columns=['Height']))
-        rimdepth = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblRimDepth'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
-        df.append(pd.DataFrame([rimdepth], columns=['Rim Depth']))
-        rimwidth = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblRimWidth'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
-        df.append(pd.DataFrame([rimwidth], columns=['Rim Width']))
-        print(df)
 
     df.to_csv('discs.csv', index=False)
 
@@ -241,15 +252,13 @@ if args.full:
 if args.manufacturers:
     manufacturer_list = csv['Manufacturer'].unique()
     manufacturer_list.sort()
-    for m in manufacturer_list:
-        print(m)
+    print(*manufacturer_list, sep='\n')
     sys.exit(0)
 
 if args.discnames:
     discnames_list = csv['Name'].unique()
     discnames_list.sort()
-    for dn in discnames_list:
-        print(dn)
+    print(*discnames_list, sep='\n')
     sys.exit(0)
 
 if len(sys.argv) < 2:

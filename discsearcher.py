@@ -57,13 +57,18 @@ def csvgenerator():
         for each in fixeditems2:
             each = f'{i.replace("/category/", "")},{each}'
             each = list(each.split(','))
+            each[2] = float(each[2].replace("'", ""))
+            each[3] = float(each[3].replace("'", ""))
+            each[4] = float(each[4].replace("'", ""))
+            each[5] = float(each[5].replace("'", ""))
+            print(each)
             if each[1] == 'CD':
                 each[1] = 'CD-Craze'
             if each[1] == 'DD':
                 each[1] = 'DD-Hysteria'
             if each[1] == 'DD2':
                 each[1] = 'DD2-Frenzy'
-            if each[1] == 'DD3-':
+            if each[1] == 'DD3 ':
                 each[1] = 'DD3'
             if each[1] == 'Enigma':
                 each[1] = 'Evolution-Enigma'
@@ -77,12 +82,20 @@ def csvgenerator():
                 each[1] = 'MD2-Fiend'
             if each[1] == 'FL':
                 each[1] = 'Firebird-FL'
-            if each[1] == 'KC-Aviar':
+            if each[1] == 'KC Aviar':
                 each[1] = 'Aviar-KC-Pro'
+            if each[1] == 'TeeBird +':
+                each[1] = 'TeeBird-'
+            if each[1] == 'Roc +':
+                each[1] = 'Roc-'
+            if each[1] == 'XD +':
+                each[1] = 'XD-'
             if each[1] == 'Luan':
                 each[1] = 'Lu'
             if each[1] == 'Claws':
                 each[1] = 'Talon-(Claws)'
+            if each[1] == 'D Model US+':
+                each[1] = 'D-Model-US-Plus'
             name = re.sub(r' ', '-', each[1])
             name = re.sub(r"'", '', name)
             name = re.sub(r'\+$', '-', name)

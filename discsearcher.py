@@ -9,8 +9,18 @@ import socket
 import sys
 import time
 from bs4 import BeautifulSoup as soup
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 from tabulate import tabulate
 
+# Adding in some retry w/ backoff logic. Helps with slower chans.
+session = requests.Session()
+retry = Retry(connect=3, backoff_factor=0.5)
+adapter = HTTPAdapter(max_retries=retry)
+session.mount('http://', adapter)
+session.mount('https://', adapter)
+
+# Setting socket level timeout
 socket.setdefaulttimeout(300)
 
 contact = 'discsearcher@icloud.com'
@@ -61,47 +71,56 @@ def csvgenerator():
             each[3] = float(each[3].replace("'", ""))
             each[4] = float(each[4].replace("'", ""))
             each[5] = float(each[5].replace("'", ""))
-            print(each)
-            if each[1] == 'CD':
-                each[1] = 'CD-Craze'
-            if each[1] == 'DD':
-                each[1] = 'DD-Hysteria'
-            if each[1] == 'DD2':
-                each[1] = 'DD2-Frenzy'
-            if each[1] == 'DD3 ':
-                each[1] = 'DD3'
-            if each[1] == 'Enigma':
-                each[1] = 'Evolution-Enigma'
-            if each[1] == 'PD':
-                each[1] = 'PD-Freak'
-            if each[1] == 'PD2':
-                each[1] = 'PD2-Chaos'
-            if each[1] == 'TD':
-                each[1] = 'TD-Rush'
-            if each[1] == 'MD2':
-                each[1] = 'MD2-Fiend'
-            if each[1] == 'FL':
-                each[1] = 'Firebird-FL'
-            if each[1] == 'KC Aviar':
-                each[1] = 'Aviar-KC-Pro'
-            if each[1] == 'TeeBird +':
-                each[1] = 'TeeBird-'
-            if each[1] == 'Roc +':
-                each[1] = 'Roc-'
-            if each[1] == 'XD +':
-                each[1] = 'XD-'
-            if each[1] == 'Luan':
-                each[1] = 'Lu'
-            if each[1] == 'Claws':
-                each[1] = 'Talon-(Claws)'
-            if each[1] == 'D Model US+':
-                each[1] = 'D-Model-US-Plus'
-            name = re.sub(r' ', '-', each[1])
+            name = each[1]
+            name = re.sub(r' ', '-', name)
             name = re.sub(r"'", '', name)
+            name = re.sub(r'-$', '', name)
             name = re.sub(r'\+$', '-', name)
+            if each[1] == 'CD':
+                name = 'CD-Craze'
+            if each[1] == 'DD':
+                name = 'DD-Hysteria'
+            if each[1] == 'DD2':
+                name = 'DD2-Frenzy'
+            if each[1] == 'DD3 ':
+                name = 'DD3'
+            if each[1] == 'Enigma':
+                name = 'Evolution-Enigma'
+            if each[1] == 'PD':
+                name = 'PD-Freak'
+            if each[1] == 'PD2':
+                name = 'PD2-Chaos'
+            if each[1] == 'TD':
+                name = 'TD-Rush'
+            if each[1] == 'MD2':
+                name = 'MD2-Fiend'
+            if each[1] == 'FL':
+                name = 'Firebird-FL'
+            if each[1] == 'KC Aviar':
+                name = 'Aviar-KC-Pro'
+            if each[1] == 'TeeBird +':
+                name = 'TeeBird-'
+            if each[1] == 'Roc +':
+                name = 'Roc-'
+            if each[1] == 'XD +':
+                name = 'XD-'
+            if each[1] == 'Luan':
+                name = 'Lu'
+            if each[1] == 'Claws':
+                name = 'Talon-(Claws)'
+            if each[1] == 'D Model US+':
+                name = 'D-Model-US-Plus'
+            if each[1] == 'D Model US++':
+                name = 'D-Model-US-Plus-Plus'
+            if each[1] == 'F Model OS+':
+                name = 'F-Model-OS-Plus'
             dimurl = url + '/' + each[0] + '-' + name
-            discpage = requests.get(dimurl).text
-            print(name, dimurl)
+            print(dimurl)
+            try:
+                discpage = requests.get(dimurl).text
+            except:
+                discpage = requests.get(dimurl).text
+                pass
             soupf = soup(discpage, 'lxml')
             diameter = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblDiameter'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
             each.append(diameter)
@@ -222,16 +241,15 @@ if args.version:
     print(version)
     sys.exit(0)
 
-csvgenerator()
 
-#if not os.path.exists('discs.csv'):
-#    print('The discs.csv file is missing! Generating a new copy......')
-#    try:
-#        csvgenerator()
-#    except:
-#        print(updateissue)
-#        sys.exit(1)
-#    sys.exit(0)
+if not os.path.exists('discs.csv'):
+    print('The discs.csv file is missing! Generating a new copy......')
+    try:
+        csvgenerator()
+    except:
+        print(updateissue)
+        sys.exit(1)
+    sys.exit(0)
 
 if time.time()-os.path.getctime('discs.csv') > 2629743:
     print('The discs.csv file is more than 30 days old! Generating a new copy......')

@@ -23,7 +23,7 @@ socket.setdefaulttimeout(300)
 
 # Version Information
 contact = 'discsearcher@icloud.com'
-vnum = 2020.364
+vnum = 2021.011
 version = f'''
 discsearcher v{vnum}
 \u00A9 2020 - Throw The Roller, LLC.

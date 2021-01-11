@@ -33,95 +33,6 @@ discsearcher v{vnum}
 {contact}
 '''
 
-# Elements needed for URL generation
-url = 'https://infinitediscs.com'
-referral = '?tag=3c8c6529'
-
-# Some known disc name translations
-discdictionary = {
-    'CD': 'CD-Craze',
-    'DD': 'DD-Hysteria',
-    'DD2': 'DD2-Frenzy',
-    'DD3 ': 'DD3',
-    'Enigma': 'Evolution-Enigma',
-    'PD': 'PD-Freak',
-    'PD2': 'PD2-Chaos',
-    'TD': 'TD-Rush',
-    'MD2': 'MD2-Fiend',
-    'FL': 'Firebird-FL',
-    'KC Aviar': 'Aviar-KC-Pro',
-    'TeeBird +': 'TeeBird-',
-    'Roc +': 'Roc-',
-    'XD +': 'XD-',
-    'Luan': 'Lu',
-    'Claws': 'Talon-(Claws)',
-    'D Model US+': 'D-Model-US-Plus',
-    'D Model US++': 'D-Model-US-Plus-Plus',
-    'F Model OS+': 'F-Model-OS-Plus'
-}
-
-def csvgenerator():
-    mfgrs = []
-    mfgrnames = []
-
-    mainpage = requests.get(url).text
-    soupf = soup(mainpage, 'lxml')
-
-    for i in soupf.find_all('a', attrs={'href': re.compile("/category/")}):
-        mfgrs.append(i)
-
-    for m in mfgrs:
-        m = str(m).split('"')
-        mfgrnames.append(m[1])
-
-    mfgrnames = np.unique(mfgrnames)
-
-    df = pd.DataFrame(columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fade', 'Diameter', 'Height', 'Rim Depth', 'Rim Width'])
-
-    for i in mfgrnames:
-        idurl = requests.get(url + i).text
-        soupf = soup(idurl, 'lxml')
-        fixeditems = re.sub(r'\r\n.*pull-left', r'', str(soupf.find_all('h4')))
-        fixeditems2 = fixeditems.split(',')
-        fixeditems2 = [o for o in fixeditems2 if re.search('</small></h4>', o)]
-        fixeditems2 = [re.sub('"><small>', ',', o) for o in fixeditems2]
-        fixeditems2 = [re.sub('</small></h4>', '', o) for o in fixeditems2]
-        fixeditems2 = [re.sub(r'<h4>\s+', '', o) for o in fixeditems2]
-        fixeditems2 = [re.sub('/', ',', o) for o in fixeditems2]
-        fixeditems2 = [re.sub(r'^\s+', '', o) for o in fixeditems2]
-        for each in fixeditems2:
-            each = f'{i.replace("/category/", "")},{each}'
-            each = list(each.split(','))
-            each[2] = float(each[2].replace("'", ""))
-            each[3] = float(each[3].replace("'", ""))
-            each[4] = float(each[4].replace("'", ""))
-            each[5] = float(each[5].replace("'", ""))
-            name = each[1]
-            if name in discdictionary:
-                name = discdictionary.get(name)
-            name = re.sub(r' ', '-', name)
-            name = re.sub(r"'", '', name)
-            name = re.sub(r'-$', '', name)
-            name = re.sub(r'\+$', '-', name)
-            name = re.sub(r'--$', '-', name)
-            dimurl = url + '/' + each[0] + '-' + name
-            discpage = requests.get(dimurl).text
-            soupf = soup(discpage, 'lxml')
-            diameter = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblDiameter'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
-            each.append(diameter)
-            height = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblHeight'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
-            each.append(height)
-            rimdepth = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblRimDepth'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
-            each.append(rimdepth)
-            rimwidth = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblRimWidth'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
-            each.append(rimwidth)
-            print(each)
-            df = df.append(pd.DataFrame([each], columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fade', 'Diameter', 'Height', 'Rim Depth', 'Rim Width']), ignore_index=True)
-
-    df['Purchase Url'] = url + '/' + df['Manufacturer'] + '-' + df['Name'].replace(discdictionary) + referral
-
-    df.to_csv('discs.csv', index=False)
-
 updateissue='''
 An error occurred in obtaining an updated list of discs.
 Please try running the tool again!
@@ -226,20 +137,26 @@ if args.version:
     print(version)
     sys.exit(0)
 
-
 if not os.path.exists('discs.csv'):
-    print('The discs.csv file is missing! Generating a new copy......')
+    print('The discs.csv file is missing! Downloading the latest copy....')
     try:
-        csvgenerator()
+        csvdata = requests.get('https://bitbucket.org/biscuits/discsearcher/downloads/discs.csv').text
+        csvfile = open('discs.csv', 'w')
+        csvfile.write(csvdata)
+        csvfile.close()
     except:
         print(updateissue)
         sys.exit(1)
     sys.exit(0)
 
 if time.time()-os.path.getctime('discs.csv') > 2629743:
-    print('The discs.csv file is more than 30 days old! Generating a new copy......')
+    print('The discs.csv file is more than 30 days old! Downloading the latest copy....')
     try:
-        csvgenerator()
+        os.remove('discs.csv')
+        csvdata = requests.get('https://bitbucket.org/biscuits/discsearcher/downloads/discs.csv').text
+        csvfile = open('discs.csv', 'w')
+        csvfile.write(csvdata)
+        csvfile.close()
     except:
         print(updateissue)
         sys.exit(1)
@@ -248,7 +165,11 @@ if time.time()-os.path.getctime('discs.csv') > 2629743:
 if args.update:
     print('The discs.csv file will now be updated......')
     try:
-        csvgenerator()
+        os.remove('discs.csv')
+        csvdata = requests.get('https://bitbucket.org/biscuits/discsearcher/downloads/discs.csv').text
+        csvfile = open('discs.csv', 'w')
+        csvfile.write(csvdata)
+        csvfile.close()
     except:
         print(updateissue)
         sys.exit(1)

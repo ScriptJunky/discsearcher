@@ -69,7 +69,7 @@ def csvgenerator():
 
     mfgrnames = np.unique(mfgrnames)
 
-    df = pd.DataFrame(columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fade', 'Diameter', 'Height', 'Rim Depth', 'Rim Width'])
+    df = pd.DataFrame(columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fade', 'Diameter', 'Height', 'RimDepth', 'RimWidth'])
 
     for i in mfgrnames:
         idurl = requests.get(url + i).text
@@ -109,7 +109,7 @@ def csvgenerator():
             rimwidth = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblRimWidth'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
             each.append(rimwidth)
             print(each)
-            df = df.append(pd.DataFrame([each], columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fade', 'Diameter', 'Height', 'Rim Depth', 'Rim Width']), ignore_index=True)
+            df = df.append(pd.DataFrame([each], columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fade', 'Diameter', 'Height', 'RimDepth', 'RimWidth']), ignore_index=True)
 
     df['Purchase Url'] = url + '/' + df['Manufacturer'] + '-' + df['Name'].replace(discdictionary) + referral
 

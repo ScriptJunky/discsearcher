@@ -47,70 +47,30 @@ STANDARD FLAGS:
 --version        Print version and exit.
 
 FILTERING (STANDARD FILTERS):
---mfgr           Used to include specific manufacturers in the search output        (--mfgr Innova, for example)
---name           Used to include specific discs in the search output                (--name Mamba, for example)
---speed          Used to include discs with a specific speed in the search output   (--speed 10, for example. Will only show 10.0 and not 10.1 - 10.9)
---glide          Used to include discs with a specific glide in the search output   (--glide 5, for example. Will only show 5.0 and not 5.1 - 5.9)
---turn           Used to include discs with a specific turn in the search output    (--turn -5, for example. Will only show -5.0 and not -5.1 - -5.9)
---fade           Used to include discs with a specific fade in the search output    (--fade 3, for example. Will only show 3.0 and not 3.1 - 3.9)
+--mfgr           Used to include discs by manufacturer             (--mfgr Innova, for example)
+--name           Used to include discs specifically by name        (--name Mamba, for example)
+--speed          Used to include discs with a specific speed       (--speed 10, for example. Will only show 10.0 and not 10.1 - 10.9)
+--glide          Used to include discs with a specific glide       (--glide 5, for example. Will only show 5.0 and not 5.1 - 5.9)
+--turn           Used to include discs with a specific turn        (--turn -5, for example. Will only show -5.0 and not -5.1 - -5.9)
+--fade           Used to include discs with a specific fade        (--fade 3, for example. Will only show 3.0 and not 3.1 - 3.9)
+--diam           Used to include discs with a specific diameter    (--diam 21.5, for example. Will only show discs that have a diameter of 21.5cm)
+--height         Used to include discs with a specific height      (--height 1.7, for example. Will only show discs that have a height of 1.7cm)
+--depth          Used to include discs with a specific rim depth   (--depth 1.4, for example. Will only show discs that have a rim depth of 1.4cm)
+--width          Used to include discs with a specific rim width   (--width 1.5, for example. Will only show discs that have a rim width of 1.5cm)
 
 FILTERING (REGULAR EXPRESSIONS):
---mfgrrx         This can be used to search for multiple manufacturers by name, with a single call    (--mfgrrx '(MVP|Axiom|Streamline)', for example. Only discs made by MVP, Axiom, or Streamline will be matched.)
---namerx         This can be used to search for multiple discs by name, with a single call            (--namerx '(Wave|Wraith|Aries)', for example. Only the Wave, Wraith, and Aries will be matched.)
---speedrx        This can be used to search for multiple speeds and speed ranges, with a single call  (--speedrx '(10|11)\.[0-9]', for example. Speed between 10.0-11.9 will be matched.)
---gliderx        This can be used to search for multiple glides and glide ranges, with a single call  (--gliderx '[56]\.[0-9]', for example. Glide between 5.0-6.9 will be matched.)
---turnrx         This can be used to search for multiple turn and turn ranges, with a single call     (--turnrx '^-[3-5]\.[0-9]', for example. Turn ratings between -3.0 and -5.9 will be matched.)
---faderx         This can be used to search for multiple fade and fade ranges, with a single call     (--faderx '^-[2-3]\.[0-9]', for example. Fade ratings between -2.0 and -3.9 will be matched.)
+--mfgrrx       Used to search for multiple manufacturers by name, with a single call      (--mfgrrx '(MVP|Axiom|Streamline)', for example. Only discs made by MVP, Axiom, or Streamline will be matched.)
+--namerx       Used to search for multiple discs by name, with a single call              (--namerx '(Wave|Wraith|Aries)', for example. Only the Wave, Wraith, and Aries will be matched.)
+--speedrx      Used to search for multiple speeds and speed ranges, with a single call    (--speedrx '(10|11)\.[0-9]', for example. Speed between 10.0-11.9 will be matched.)
+--gliderx      Used to search for multiple glides and glide ranges, with a single call    (--gliderx '[56]\.[0-9]', for example. Glide between 5.0-6.9 will be matched.)
+--turnrx       Used to search for multiple turn and turn ranges, with a single call       (--turnrx '^-[3-5]\.[0-9]', for example. Turn ratings between -3.0 and -5.9 will be matched.)
+--faderx       Used to search for multiple fade and fade ranges, with a single call       (--faderx '^-[2-3]\.[0-9]', for example. Fade ratings between -2.0 and -3.9 will be matched.)
+--diamrx       Used to search for multiple diams and diam ranges, with a single call      (--diamrx '(20|21)\.\d', for example. Diameter between 20.0-21.9 will be matched.)
+--heightrx     Used to search for multiple heights and height ranges, with a single call  (--heightrx '1\.[0-9]', for example. Heights between 1.0-1.9 will be matched.)
+--depthrx      Used to search for multiple depth and depth ranges, with a single call     (--depthrx '1\.[0-9]', for example. Rim Depths between 1.0 and 1.9 will be matched.)
+--widthrx      Used to search for multiple width and width ranges, with a single call     (--widthrx '1\.[0-9]', for example. Rim Widths between 1.0 and 1.9 will be matched.)
 
-EXAMPLES:
-
-================================================================================================================================
-Filtering - Standard Filters
-================================================================================================================================
-~/git/discsearcher(master)» discsearcher --turn -2 --speed 11
-Manufacturer    Name     Speed    Glide    Turn    Fade    Purchase Url
---------------  -------  -------  -------  ------  ------  -------------------------------------------------------
-Discraft        Wildcat  11.0     5.0      -2.0    3.0     https://infinitediscs.com/Discraft-Wildcat?tag=3c8c6529
-Salient         Napalm   11.0     5.0      -2.0    2.0     https://infinitediscs.com/Salient-Napalm?tag=3c8c6529
-~/git/discsearcher(master)»
-
-================================================================================================================================
-Filtering - Regular Expressions
-================================================================================================================================
-~/git/discsearcher(master)» discsearcher --turnrx '^-2\.[0-9]' --speedrx '11\.[0-9]'
-Manufacturer    Name      Speed    Glide    Turn    Fade    Purchase Url
---------------  --------  -------  -------  ------  ------  -------------------------------------------------------------
-Axiom           Vanish    11.5     5.0      -2.7    1.9     https://infinitediscs.com/Axiom-Vanish?tag=3c8c6529
-Discraft        Spectra   11.8     4.9      -2.0    2.0     https://infinitediscs.com/Discraft-Spectra?tag=3c8c6529
-Discraft        Thrasher  11.9     5.1      -2.8    1.9     https://infinitediscs.com/Discraft-Thrasher?tag=3c8c6529
-Discraft        Wildcat   11.0     5.0      -2.0    3.0     https://infinitediscs.com/Discraft-Wildcat?tag=3c8c6529
-Dynamic-Discs   Renegade  11.0     5.0      -2.1    2.6     https://infinitediscs.com/Dynamic-Discs-Renegade?tag=3c8c6529
-Infinite-Discs  Maya      11.9     5.1      -2.9    1.0     https://infinitediscs.com/Infinite-Discs-Maya?tag=3c8c6529
-Innova          Mystere   11.0     6.0      -2.2    1.9     https://infinitediscs.com/Innova-Mystere?tag=3c8c6529
-Innova          Wahoo     11.9     6.0      -2.1    2.0     https://infinitediscs.com/Innova-Wahoo?tag=3c8c6529
-Millennium      Aries     11.0     6.0      -2.6    1.1     https://infinitediscs.com/Millennium-Aries?tag=3c8c6529
-Salient         Napalm    11.0     5.0      -2.0    2.0     https://infinitediscs.com/Salient-Napalm?tag=3c8c6529
-~/git/discsearcher(master)»
-
-NOTE: You should know the escape character of your OS prior to using regular expression searches.
-NOTE: The common wildcard characters (*|.) are NOT supported, and can cause the tool to fail or crash.
-
-MacOS escape:   {chr(92)}
-Linux escape:   {chr(92)}
-Windows escape: ^
-
-================================================================================================================================
-Filtering - Compound Query
-================================================================================================================================
-~/git/discsearcher(master)» python3 discsearcher.py --turnrx '^-2\.[0-9]' --speedrx '11\.[0-9]' --mfgr Innova --mfgr Discraft
-\Manufacturer    Name      Speed    Glide    Turn    Fade    Purchase Url
---------------  --------  -------  -------  ------  ------  --------------------------------------------------------
-Discraft        Spectra   11.8     4.9      -2.0    2.0     https://infinitediscs.com/Discraft-Spectra?tag=3c8c6529
-Discraft        Thrasher  11.9     5.1      -2.8    1.9     https://infinitediscs.com/Discraft-Thrasher?tag=3c8c6529
-Discraft        Wildcat   11.0     5.0      -2.0    3.0     https://infinitediscs.com/Discraft-Wildcat?tag=3c8c6529
-Innova          Mystere   11.0     6.0      -2.2    1.9     https://infinitediscs.com/Innova-Mystere?tag=3c8c6529
-Innova          Wahoo     11.9     6.0      -2.1    2.0     https://infinitediscs.com/Innova-Wahoo?tag=3c8c6529
-~/git/discsearcher(master)»
+*******ALL FILTERING FLAGS CAN BE COMPOUNDED, AS WELL AS MIXED\MATCHED TOGETHER IN A SINGLE QUERY*******
 '''
 
 parser = argparse.ArgumentParser(description=regexaddendum, formatter_class=argparse.RawTextHelpFormatter)
@@ -125,12 +85,20 @@ parser.add_argument('--speed', action='append', help=argparse.SUPPRESS)
 parser.add_argument('--glide', action='append', help=argparse.SUPPRESS)
 parser.add_argument('--turn', action='append', help=argparse.SUPPRESS)
 parser.add_argument('--fade', action='append', help=argparse.SUPPRESS)
+parser.add_argument('--diam', action='append', help=argparse.SUPPRESS)
+parser.add_argument('--height', action='append', help=argparse.SUPPRESS)
+parser.add_argument('--depth', action='append', help=argparse.SUPPRESS)
+parser.add_argument('--width', action='append', help=argparse.SUPPRESS)
 parser.add_argument('--mfgrrx', help=argparse.SUPPRESS)
 parser.add_argument('--namerx', help=argparse.SUPPRESS)
 parser.add_argument('--speedrx', help=argparse.SUPPRESS)
 parser.add_argument('--gliderx', help=argparse.SUPPRESS)
 parser.add_argument('--turnrx', help=argparse.SUPPRESS)
 parser.add_argument('--faderx', help=argparse.SUPPRESS)
+parser.add_argument('--diamrx', help=argparse.SUPPRESS)
+parser.add_argument('--heightrx', help=argparse.SUPPRESS)
+parser.add_argument('--depthrx', help=argparse.SUPPRESS)
+parser.add_argument('--widthrx', help=argparse.SUPPRESS)
 args = parser.parse_args()
 
 if args.version:
@@ -210,6 +178,10 @@ speedfilters = []
 glidefilters = []
 turnfilters = []
 fadefilters = []
+diamfilters = []
+heightfilters = []
+depthfilters = []
+widthfilters = []
 
 mfgrrxfilters = []
 namerxfilters = []
@@ -218,42 +190,12 @@ speedrxfilters = []
 gliderxfilters = []
 turnrxfilters = []
 faderxfilters = []
+diamrxfilters = []
+heightrxfilters = []
+depthrxfilters = []
+widthrxfilters = []
 
 finalfilter = []
-
-if args.mfgrrx:
-    args.mfgrrx = list(exrex.generate(fr'{args.mfgrrx}'))
-    mfgrrxfilters = f'csv.Manufacturer.isin({args.mfgrrx})'
-    finalfilter.append(mfgrrxfilters)
-
-if args.namerx:
-    args.namerx = list(exrex.generate(fr'{args.namerx}'))
-    namerxfilters = f'csv.Name.isin({args.namerx})'
-    finalfilter.append(namerxfilters)
-
-if args.speedrx:
-    args.speedrx = list(exrex.generate(fr'{args.speedrx}'))    
-    speedrxfilters = f'csv.Speed.isin({args.speedrx})'
-    speedrxfilters = re.sub(r"'", r"", speedrxfilters)
-    finalfilter.append(speedrxfilters)
-
-if args.gliderx:
-    args.gliderx = list(exrex.generate(fr'{args.gliderx}'))
-    gliderxfilters = f'csv.Glide.isin({args.gliderx})'
-    gliderxfilters = re.sub(r"'", r"", gliderxfilters)
-    finalfilter.append(gliderxfilters)
-
-if args.turnrx:
-    args.turnrx = list(exrex.generate(fr'{args.turnrx}'))
-    turnrxfilters = f'csv.Turn.isin({args.turnrx})'
-    turnrxfilters = re.sub(r"'", r"", turnrxfilters)
-    finalfilter.append(turnrxfilters)
-
-if args.faderx:
-    args.faderx = list(exrex.generate(fr'{args.faderx}'))
-    faderxfilters = f'csv.Fade.isin({args.faderx})'
-    faderxfilters = re.sub(r"'", r"", faderxfilters)
-    finalfilter.append(faderxfilters)
 
 if args.mfgr:
     mfgrfilters = f'csv.Manufacturer.isin({args.mfgr})'
@@ -282,6 +224,84 @@ if args.fade:
     fadefilters = f'csv.Fade.isin({args.fade})'
     fadefilters = re.sub(r"'", r"", fadefilters)
     finalfilter.append(fadefilters)
+
+if args.diam:
+    diamfilters = f'csv.Diameter.isin({args.diam})'
+    diamfilters = re.sub(r"'", r"", diamfilters)
+    finalfilter.append(diamfilters)
+
+if args.height:
+    heightfilters = f'csv.Height.isin({args.height})'
+    heightfilters = re.sub(r"'", r"", heightfilters)
+    finalfilter.append(heightfilters)
+
+if args.depth:
+    depthfilters = f'csv.RimDepth.isin({args.depth})'
+    depthfilters = re.sub(r"'", r"", depthfilters)
+    finalfilter.append(depthfilters)
+
+if args.width:
+    widthfilters = f'csv.RimWidth.isin({args.width})'
+    widthfilters = re.sub(r"'", r"", widthfilters)
+    finalfilter.append(widthfilters)
+
+if args.mfgrrx:
+    args.mfgrrx = list(exrex.generate(fr'{args.mfgrrx}'))
+    mfgrrxfilters = f'csv.Manufacturer.isin({args.mfgrrx})'
+    finalfilter.append(mfgrrxfilters)
+
+if args.namerx:
+    args.namerx = list(exrex.generate(fr'{args.namerx}'))
+    namerxfilters = f'csv.Name.isin({args.namerx})'
+    finalfilter.append(namerxfilters)
+
+if args.speedrx:
+    args.speedrx = list(exrex.generate(fr'{args.speedrx}'))
+    speedrxfilters = f'csv.Speed.isin({args.speedrx})'
+    speedrxfilters = re.sub(r"'", r"", speedrxfilters)
+    finalfilter.append(speedrxfilters)
+
+if args.gliderx:
+    args.gliderx = list(exrex.generate(fr'{args.gliderx}'))
+    gliderxfilters = f'csv.Glide.isin({args.gliderx})'
+    gliderxfilters = re.sub(r"'", r"", gliderxfilters)
+    finalfilter.append(gliderxfilters)
+
+if args.turnrx:
+    args.turnrx = list(exrex.generate(fr'{args.turnrx}'))
+    turnrxfilters = f'csv.Turn.isin({args.turnrx})'
+    turnrxfilters = re.sub(r"'", r"", turnrxfilters)
+    finalfilter.append(turnrxfilters)
+
+if args.faderx:
+    args.faderx = list(exrex.generate(fr'{args.faderx}'))
+    faderxfilters = f'csv.Fade.isin({args.faderx})'
+    faderxfilters = re.sub(r"'", r"", faderxfilters)
+    finalfilter.append(faderxfilters)
+
+if args.diamrx:
+    args.diamrx = list(exrex.generate(fr'{args.diamrx}'))
+    diamrxfilters = f'csv.Diameter.isin({args.diamrx})'
+    diamrxfilters = re.sub(r"'", r"", diamrxfilters)
+    finalfilter.append(diamrxfilters)
+
+if args.heightrx:
+    args.heightrx = list(exrex.generate(fr'{args.heightrx}'))
+    heightrxfilters = f'csv.Height.isin({args.heightrx})'
+    heightrxfilters = re.sub(r"'", r"", heightrxfilters)
+    finalfilter.append(heightrxfilters)
+
+if args.depthrx:
+    args.depthrx = list(exrex.generate(fr'{args.depthrx}'))
+    depthrxfilters = f'csv.RimDepth.isin({args.depthrx})'
+    depthrxfilters = re.sub(r"'", r"", depthrxfilters)
+    finalfilter.append(depthrxfilters)
+
+if args.widthrx:
+    args.widthrx = list(exrex.generate(fr'{args.widthrx}'))
+    widthrxfilters = f'csv.RimWidth.isin({args.widthrx})'
+    widthrxfilters = re.sub(r"'", r"", widthrxfilters)
+    finalfilter.append(widthrxfilters)
 
 finalfilter = ' & '.join(finalfilter)
 

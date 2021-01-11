@@ -1,5 +1,6 @@
 import argparse
 import exrex
+import hashlib
 import numpy as np
 import os
 import pandas as pd
@@ -117,7 +118,6 @@ def csvgenerator():
             print(each)
             df = df.append(pd.DataFrame([each], columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fade', 'Diameter', 'Height', 'Rim Depth', 'Rim Width']), ignore_index=True)
 
-    #df['Purchase Url'] = url + '/' + df['Manufacturer'] + '-' + df['Name'].replace(regex={r' ': '-', r"'": '', r'\+': ''}) + referral
     df['Purchase Url'] = url + '/' + df['Manufacturer'] + '-' + df['Name'].replace(discdictionary) + referral
 
     df.to_csv('discs.csv', index=False)

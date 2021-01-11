@@ -1,7 +1,5 @@
 import argparse
 import exrex
-import hashlib
-import numpy as np
 import os
 import pandas as pd
 import re
@@ -9,7 +7,6 @@ import requests
 import socket
 import sys
 import time
-from bs4 import BeautifulSoup as soup
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 from tabulate import tabulate
@@ -36,6 +33,11 @@ discsearcher v{vnum}
 updateissue='''
 An error occurred in obtaining an updated list of discs.
 Please try running the tool again!
+'''
+
+updatesuccess='''
+discs.csv was successfully updated!
+Searching will be successful on next run.
 '''
 
 regexaddendum=f'''
@@ -115,6 +117,7 @@ if not os.path.exists('discs.csv'):
     except:
         print(updateissue)
         sys.exit(1)
+    print(updatesuccess)
     sys.exit(0)
 
 if time.time()-os.path.getctime('discs.csv') > 2629743:
@@ -128,6 +131,7 @@ if time.time()-os.path.getctime('discs.csv') > 2629743:
     except:
         print(updateissue)
         sys.exit(1)
+    print(updatesuccess)
     sys.exit(0)
 
 if args.update:
@@ -141,6 +145,7 @@ if args.update:
     except:
         print(updateissue)
         sys.exit(1)
+    print(updatesuccess)
     sys.exit(0)
 
 pd.set_option('display.max_columns', None)

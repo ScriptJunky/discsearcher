@@ -119,4 +119,6 @@ for i in mfgrnames:
 
 df['Purchase Url'] = url + '/' + df['Manufacturer'] + '-' + df['Name'].replace(discdictionary) + referral
 
+df.drop_duplicates(inplace=True, ignore_index=True)
+
 df.to_csv('discs.csv', index=False)

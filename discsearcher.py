@@ -1,5 +1,6 @@
 import argparse
 import exrex
+import hashlib
 import os
 import pandas as pd
 import re
@@ -119,6 +120,22 @@ if not os.path.exists('discs.csv'):
         sys.exit(1)
     print(updatesuccess)
     sys.exit(0)
+else:
+    print('Checking for a new version of the discs.csv file....')
+    with open('discs.csv', 'rb') as csvfile:
+        localcsv = csvfile.read()
+        localhash = hashlib.md5(localcsv)
+    print(f'Local CSV file hash is {localhash.hexdigest()}')
+    remotecsvfile = requests.get('https://bitbucket.org/biscuits/discsearcher/downloads/discs.csv').text
+    remoteread = remotecsvfile.encode('ascii')
+    remotehash = hashlib.md5(remoteread)
+    print(f'Remote CSV file hash is {remotehash.hexdigest()}')
+    if localhash.hexdigest() != remotehash.hexdigest():
+        os.remove('discs.csv')
+        csvcreate = open('discs.csv', 'w')
+        csvcreate.write(remotecsvfile)
+        csvcreate.close()
+    sys.exit(0)
 
 if time.time()-os.path.getctime('discs.csv') > 2629743:
     print('The discs.csv file is more than 30 days old! Downloading the latest copy....')
@@ -147,6 +164,8 @@ if args.update:
         sys.exit(1)
     print(updatesuccess)
     sys.exit(0)
+
+
 
 pd.set_option('display.max_columns', None)
 pd.set_option('display.max_rows', None)

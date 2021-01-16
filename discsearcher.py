@@ -125,16 +125,16 @@ else:
     with open('discs.csv', 'rb') as csvfile:
         localcsv = csvfile.read()
         localhash = hashlib.md5(localcsv)
-    print(f'Local CSV file hash is {localhash.hexdigest()}')
     remotecsvfile = requests.get('https://bitbucket.org/biscuits/discsearcher/downloads/discs.csv').text
     remoteread = remotecsvfile.encode('ascii')
     remotehash = hashlib.md5(remoteread)
-    print(f'Remote CSV file hash is {remotehash.hexdigest()}')
     if localhash.hexdigest() != remotehash.hexdigest():
+        print('Updating the local CSV file to current....')
         os.remove('discs.csv')
         csvcreate = open('discs.csv', 'w')
         csvcreate.write(remotecsvfile)
         csvcreate.close()
+        print(updatesuccess)
         sys.exit(0)
 
 if time.time()-os.path.getctime('discs.csv') > 2629743:

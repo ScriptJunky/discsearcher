@@ -50,16 +50,16 @@ STANDARD FLAGS:
 --version        Print version and exit.
 
 FILTERING (STANDARD FILTERS):
---mfgr           Used to include discs by manufacturer             (--mfgr Innova, for example)
---name           Used to include discs specifically by name        (--name Mamba, for example)
---speed          Used to include discs with a specific speed       (--speed 10, for example. Will only show 10.0 and not 10.1 - 10.9)
---glide          Used to include discs with a specific glide       (--glide 5, for example. Will only show 5.0 and not 5.1 - 5.9)
---turn           Used to include discs with a specific turn        (--turn -5, for example. Will only show -5.0 and not -5.1 - -5.9)
---fade           Used to include discs with a specific fade        (--fade 3, for example. Will only show 3.0 and not 3.1 - 3.9)
---diam           Used to include discs with a specific diameter    (--diam 21.5, for example. Will only show discs that have a diameter of 21.5cm)
---height         Used to include discs with a specific height      (--height 1.7, for example. Will only show discs that have a height of 1.7cm)
---depth          Used to include discs with a specific rim depth   (--depth 1.4, for example. Will only show discs that have a rim depth of 1.4cm)
---width          Used to include discs with a specific rim width   (--width 1.5, for example. Will only show discs that have a rim width of 1.5cm)
+--mfgr         Used to include discs by manufacturer                                      (--mfgr Innova, for example)
+--name         Used to include discs specifically by name                                 (--name Mamba, for example)
+--speed        Used to include discs with a specific speed                                (--speed 10, for example. Will only show 10.0 and not 10.1 - 10.9)
+--glide        Used to include discs with a specific glide                                (--glide 5, for example. Will only show 5.0 and not 5.1 - 5.9)
+--turn         Used to include discs with a specific turn                                 (--turn -5, for example. Will only show -5.0 and not -5.1 - -5.9)
+--fade         Used to include discs with a specific fade                                 (--fade 3, for example. Will only show 3.0 and not 3.1 - 3.9)
+--diam         Used to include discs with a specific diameter                             (--diam 21.5, for example. Will only show discs that have a diameter of 21.5cm)
+--height       Used to include discs with a specific height                               (--height 1.7, for example. Will only show discs that have a height of 1.7cm)
+--depth        Used to include discs with a specific rim depth                            (--depth 1.4, for example. Will only show discs that have a rim depth of 1.4cm)
+--width        Used to include discs with a specific rim width                            (--width 1.5, for example. Will only show discs that have a rim width of 1.5cm)
 
 FILTERING (REGULAR EXPRESSIONS):
 --mfgrrx       Used to search for multiple manufacturers by name, with a single call      (--mfgrrx '(MVP|Axiom|Streamline)', for example. Only discs made by MVP, Axiom, or Streamline will be matched.)

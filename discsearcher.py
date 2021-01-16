@@ -135,7 +135,7 @@ else:
         csvcreate = open('discs.csv', 'w')
         csvcreate.write(remotecsvfile)
         csvcreate.close()
-    sys.exit(0)
+        sys.exit(0)
 
 if time.time()-os.path.getctime('discs.csv') > 2629743:
     print('The discs.csv file is more than 30 days old! Downloading the latest copy....')

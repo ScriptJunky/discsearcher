@@ -52,13 +52,18 @@ package = cwd + f'/dist/discsearcher-{version}-{platform}'
 
 
 # Let's go ahead and ship it off to bitbucket
-uploadfile = {'file': open(package, 'rb')}
+uploadfile = {'files': open(package, 'rb')}
 credentials = {
-    'username': args.un,
+    'user': args.un,
     'password': args.pw
 }
 
-print(args.un, args.pw)
 url = 'https://api.bitbucket.org/2.0/repositories/biscuits/discsearcher/downloads'
-r = requests.post(url, data=credentials, files=uploadfile)
-print(r.text, r.status_code)
+r = requests.post(url, auth=(args.un, args.pw), files=uploadfile)
+
+
+# Clean up the remnants post build
+os.remove(f'discsearcher-{version}-{platform}.spec')
+shutil.rmtree('build', ignore_errors=True)
+shutil.rmtree('dist', ignore_errors=True)
+shutil.rmtree('__pycache__', ignore_errors=True)

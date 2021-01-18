@@ -3,6 +3,7 @@ import os
 import re
 import shutil
 import sys
+import PyInstaller.__main__
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--un', help=argparse.SUPPRESS)
@@ -39,4 +40,15 @@ with open('discsearcher.py') as f:
     version = 'v' + version.group()
     f.close()
 
-print(platform, toolpath, version)
+
+# Time to set the build name
+buildname = f'discsearcher-{version}-{platform}'
+
+
+# Building time!
+PyInstaller.__main__.run([
+    f'--name=%s' % buildname,
+    '-F',
+    os.path.join('my_package', toolpath)
+])
+

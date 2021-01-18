@@ -7,7 +7,6 @@ import re
 import requests
 import socket
 import sys
-import time
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 from tabulate import tabulate
@@ -46,7 +45,6 @@ STANDARD FLAGS:
 --full           Print the full listing of discs (and their flight numbers) that Infinite Discs sells.
 --manufacturers  Print a list of all disc manufacturers available from Infinite Discs.
 --discnames      Print the list of disc names available from Infinite Discs.
---update         Update the local csv file that stores discs, their manufacturers, and their flight numbers.
 --version        Print version and exit.
 
 FILTERING (STANDARD FILTERS):
@@ -121,7 +119,6 @@ if not os.path.exists('discs.csv'):
     print(updatesuccess)
     sys.exit(0)
 else:
-    print('Checking for a new version of the discs.csv file....')
     csvfile = open('discs.csv', 'r')
     localcsvfile = csvfile.read()
     localread = localcsvfile.encode('ascii')
@@ -129,43 +126,15 @@ else:
     remotecsvfile = requests.get('https://bitbucket.org/biscuits/discsearcher/downloads/discs.csv').text
     remoteread = remotecsvfile.encode('ascii')
     remotehash = hashlib.md5(remoteread)
-    if localhash.hexdigest() != remotehash.hexdigest():
-        print('Updating the local CSV file to current....')
-        os.remove('discs.csv')
-        csvcreate = open('discs.csv', 'w')
-        csvcreate.write(remotecsvfile)
-        csvcreate.close()
-        print(updatesuccess)
-        sys.exit(0)
 
-if time.time()-os.path.getctime('discs.csv') > 2629743:
-    print('The discs.csv file is more than 30 days old! Downloading the latest copy....')
-    try:
-        os.remove('discs.csv')
-        csvdata = requests.get('https://bitbucket.org/biscuits/discsearcher/downloads/discs.csv').text
-        csvfile = open('discs.csv', 'w')
-        csvfile.write(csvdata)
-        csvfile.close()
-    except:
-        print(updateissue)
-        sys.exit(1)
+if localhash.hexdigest() != remotehash.hexdigest():
+    print('Updating the local CSV file to current....')
+    os.remove('discs.csv')
+    csvcreate = open('discs.csv', 'w')
+    csvcreate.write(remotecsvfile)
+    csvcreate.close()
     print(updatesuccess)
     sys.exit(0)
-
-if args.update:
-    print('The discs.csv file will now be updated......')
-    try:
-        os.remove('discs.csv')
-        csvdata = requests.get('https://bitbucket.org/biscuits/discsearcher/downloads/discs.csv').text
-        csvfile = open('discs.csv', 'w')
-        csvfile.write(csvdata)
-        csvfile.close()
-    except:
-        print(updateissue)
-        sys.exit(1)
-    print(updatesuccess)
-    sys.exit(0)
-
 
 
 pd.set_option('display.max_columns', None)

@@ -21,7 +21,7 @@ if not args.pw:
 
 # Let's get our platform information
 platdict = {
-    'win32': 'windows64',
+    'win32': 'windows64.exe',
     'darwin': 'darwin64',
     'linux': 'linux64'
 }
@@ -41,13 +41,9 @@ with open('discsearcher.py') as f:
     f.close()
 
 
-# Time to set the build name
-buildname = f'discsearcher-{version}-{platform}'
-
-
 # Building time!
 PyInstaller.__main__.run([
-    f'--name=%s' % buildname,
+    f'--name=discsearcher-{version}-{platform}',
     '-F',
     os.path.join('my_package', toolpath)
 ])

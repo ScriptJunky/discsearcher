@@ -1,6 +1,7 @@
 import argparse
 import os
 import re
+import requests
 import shutil
 import sys
 import PyInstaller.__main__
@@ -47,4 +48,17 @@ PyInstaller.__main__.run([
     '-F',
     os.path.join('my_package', toolpath)
 ])
+package = cwd + f'/dist/discsearcher-{version}-{platform}'
 
+
+# Let's go ahead and ship it off to bitbucket
+uploadfile = {'file': open(package, 'rb')}
+credentials = {
+    'username': args.un,
+    'password': args.pw
+}
+
+print(args.un, args.pw)
+url = 'https://api.bitbucket.org/2.0/repositories/biscuits/discsearcher/downloads'
+r = requests.post(url, data=credentials, files=uploadfile)
+print(r.text, r.status_code)

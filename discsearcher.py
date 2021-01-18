@@ -122,9 +122,10 @@ if not os.path.exists('discs.csv'):
     sys.exit(0)
 else:
     print('Checking for a new version of the discs.csv file....')
-    with open('discs.csv', 'rb') as csvfile:
-        localcsv = csvfile.read()
-        localhash = hashlib.md5(localcsv)
+    csvfile = open('discs.csv', 'r')
+    localcsvfile = csvfile.read()
+    localread = localcsvfile.encode('ascii')
+    localhash = hashlib.md5(localread)
     remotecsvfile = requests.get('https://bitbucket.org/biscuits/discsearcher/downloads/discs.csv').text
     remoteread = remotecsvfile.encode('ascii')
     remotehash = hashlib.md5(remoteread)

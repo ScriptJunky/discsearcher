@@ -22,7 +22,7 @@ if not args.pw:
 
 # Let's get our platform information
 platdict = {
-    'win32': 'windows64.exe',
+    'win32': 'win64.exe',
     'darwin': 'darwin64',
     'linux': 'linux64'
 }

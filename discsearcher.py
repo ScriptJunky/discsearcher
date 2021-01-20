@@ -207,6 +207,21 @@ if args.sortby and args.sortorder:
         )
         sys.exit(1)
 
+if args.sortby:
+    sortby = {
+        'mfgr': 'Manufacturer',
+        'name': 'Name',
+        'speed': 'Speed',
+        'glide': 'Glide',
+        'turn': 'Turn',
+        'fade': 'Fade',
+        'diam': 'Diameter',
+        'height': 'Height',
+        'depth': 'RimDepth',
+        'width': 'RimWidth',
+    }
+    args.sortby = [sortby.get(item,item) for item in args.sortby]
+
 if args.sortorder:
     sortorder = {
         'asc': True,

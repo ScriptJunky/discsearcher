@@ -80,16 +80,16 @@ parser.add_argument('--full', action='store_true', help=argparse.SUPPRESS)
 parser.add_argument('--manufacturers', action='store_true', help=argparse.SUPPRESS)
 parser.add_argument('--discnames', action='store_true', help=argparse.SUPPRESS)
 parser.add_argument('--update', action='store_true', help=argparse.SUPPRESS)
-parser.add_argument('--mfgr', action='append', help=argparse.SUPPRESS)
-parser.add_argument('--name', action='append', help=argparse.SUPPRESS)
-parser.add_argument('--speed', action='append', help=argparse.SUPPRESS)
-parser.add_argument('--glide', action='append', help=argparse.SUPPRESS)
-parser.add_argument('--turn', action='append', help=argparse.SUPPRESS)
-parser.add_argument('--fade', action='append', help=argparse.SUPPRESS)
-parser.add_argument('--diam', action='append', help=argparse.SUPPRESS)
-parser.add_argument('--height', action='append', help=argparse.SUPPRESS)
-parser.add_argument('--depth', action='append', help=argparse.SUPPRESS)
-parser.add_argument('--width', action='append', help=argparse.SUPPRESS)
+parser.add_argument('--mfgr', nargs='+', help=argparse.SUPPRESS)
+parser.add_argument('--name', nargs='+', help=argparse.SUPPRESS)
+parser.add_argument('--speed', nargs='+', help=argparse.SUPPRESS)
+parser.add_argument('--glide', nargs='+', help=argparse.SUPPRESS)
+parser.add_argument('--turn', nargs='+', help=argparse.SUPPRESS)
+parser.add_argument('--fade', nargs='+', help=argparse.SUPPRESS)
+parser.add_argument('--diam', nargs='+', help=argparse.SUPPRESS)
+parser.add_argument('--height', nargs='+', help=argparse.SUPPRESS)
+parser.add_argument('--depth', nargs='+', help=argparse.SUPPRESS)
+parser.add_argument('--width', nargs='+', help=argparse.SUPPRESS)
 parser.add_argument('--sortby', nargs='+', help=argparse.SUPPRESS)
 parser.add_argument('--sortorder', nargs='+', help=argparse.SUPPRESS)
 parser.add_argument('--mfgrrx', help=argparse.SUPPRESS)
@@ -193,14 +193,15 @@ widthrxfilters = []
 
 finalfilter = []
 
-if len(args.sortby) != len(args.sortorder):
-    print('''
-        ERROR:
-        When specifying multiple sort columns and sort orders,
-        you must specify the same amount of both.
-        '''
-    )
-    sys.exit(1)
+if args.sortby and args.sortorder:
+    if len(args.sortby) != len(args.sortorder):
+        print('''
+            ERROR:
+            When specifying multiple sort columns and sort orders,
+            you must specify the same amount of both.
+            '''
+        )
+        sys.exit(1)
 
 if args.sortorder:
     sortorder = {

@@ -84,6 +84,7 @@ parser.add_argument('--full', action='store_true', help=argparse.SUPPRESS)
 parser.add_argument('--manufacturers', action='store_true', help=argparse.SUPPRESS)
 parser.add_argument('--discnames', action='store_true', help=argparse.SUPPRESS)
 parser.add_argument('--update', action='store_true', help=argparse.SUPPRESS)
+parser.add_argument('--maritime', action='store_true', help=argparse.SUPPRESS)
 parser.add_argument('--mfgr', nargs='+', help=argparse.SUPPRESS)
 parser.add_argument('--name', nargs='+', help=argparse.SUPPRESS)
 parser.add_argument('--speed', nargs='+', help=argparse.SUPPRESS)
@@ -107,6 +108,13 @@ parser.add_argument('--heightrx', help=argparse.SUPPRESS)
 parser.add_argument('--depthrx', help=argparse.SUPPRESS)
 parser.add_argument('--widthrx', help=argparse.SUPPRESS)
 args = parser.parse_args()
+
+if args.maritime:
+    print('''
+        Please visit:
+        https://imli.org/international-maritime-law-treaties-and-legislative-instruments-registration/
+    ''')
+    sys.exit(0)
 
 if args.version:
     print(version)

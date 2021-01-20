@@ -71,6 +71,10 @@ FILTERING (REGULAR EXPRESSIONS):
 --depthrx      Used to search for multiple depth and depth ranges, with a single call     (--depthrx '1\.[0-9]', for example. Rim Depths between 1.0 and 1.9 will be matched.)
 --widthrx      Used to search for multiple width and width ranges, with a single call     (--widthrx '1\.[0-9]', for example. Rim Widths between 1.0 and 1.9 will be matched.)
 
+SORTING:
+--sortby       Used to define the orer in which the columns should be sorted              (--sortby Speed Turn, for example, will sort by discs by Speed and then Turn) 
+--sortorder    Used to set the sort order for each field selected in --sortby             (--sortorder desc asc, will sort the first sortby field in descending order, and the second in ascending order)
+
 *******ALL FILTERING FLAGS CAN BE COMPOUNDED, AS WELL AS MIXED\MATCHED TOGETHER IN A SINGLE QUERY*******
 '''
 

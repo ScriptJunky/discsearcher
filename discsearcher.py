@@ -91,6 +91,7 @@ parser.add_argument('--height', action='append', help=argparse.SUPPRESS)
 parser.add_argument('--depth', action='append', help=argparse.SUPPRESS)
 parser.add_argument('--width', action='append', help=argparse.SUPPRESS)
 parser.add_argument('--sortby', nargs='+', help=argparse.SUPPRESS)
+parser.add_argument('--sortorder', nargs='+', help=argparse.SUPPRESS)
 parser.add_argument('--mfgrrx', help=argparse.SUPPRESS)
 parser.add_argument('--namerx', help=argparse.SUPPRESS)
 parser.add_argument('--speedrx', help=argparse.SUPPRESS)
@@ -191,6 +192,22 @@ depthrxfilters = []
 widthrxfilters = []
 
 finalfilter = []
+
+if len(args.sortby) != len(args.sortorder):
+    print('''
+        ERROR:
+        When specifying multiple sort columns and sort orders,
+        you must specify the same amount of both.
+        '''
+    )
+    sys.exit(1)
+
+if args.sortorder:
+    sortorder = {
+        'asc': True,
+        'desc': False,
+    }
+    args.sortorder = [sortorder.get(item,item) for item in args.sortorder]
 
 if args.mfgr:
     mfgrfilters = f'csv.Manufacturer.isin({args.mfgr})'
@@ -300,12 +317,19 @@ if args.widthrx:
 
 finalfilter = ' & '.join(finalfilter)
 
-if args.sortby:
+if args.sortby and args.sortorder:
+    sortedcsv = csv.sort_values(by=args.sortby, ascending=args.sortorder)
+    newcsv = 'print(tabulate(sortedcsv[' + finalfilter + '], disable_numparse=True, showindex=False, headers=csv.columns))'
+    exec(newcsv)
+    sys.exit(0)
+
+if args.sortby and not args.sortorder:
     sortedcsv = csv.sort_values(by=args.sortby)
     newcsv = 'print(tabulate(sortedcsv[' + finalfilter + '], disable_numparse=True, showindex=False, headers=csv.columns))'
     exec(newcsv)
     sys.exit(0)
-else:
+
+if not args.sortby and not args.sortorder:
     newcsv = 'print(tabulate(csv[' + finalfilter + '], disable_numparse=True, showindex=False, headers=csv.columns))'
     exec(newcsv)
     sys.exit(0)

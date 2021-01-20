@@ -3,6 +3,7 @@ import os
 import re
 import requests
 import shutil
+import stat
 import sys
 import PyInstaller.__main__
 
@@ -50,6 +51,10 @@ PyInstaller.__main__.run([
 ])
 package = cwd + f'/dist/discsearcher-{version}-{platform}'
 
+if platform == 'linux64' or platform == 'darwin64':
+    os.chmod(package, 0o555)
+
+print(f'File permissions of {package} have been set to {oct(os.stat(package).st_mode)[-3:]}')
 
 # Let's go ahead and ship it off to bitbucket
 uploadfile = {'files': open(package, 'rb')}

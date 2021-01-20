@@ -90,8 +90,7 @@ parser.add_argument('--diam', action='append', help=argparse.SUPPRESS)
 parser.add_argument('--height', action='append', help=argparse.SUPPRESS)
 parser.add_argument('--depth', action='append', help=argparse.SUPPRESS)
 parser.add_argument('--width', action='append', help=argparse.SUPPRESS)
-parser.add_argument('--sortby', help=argparse.SUPPRESS)
-parser.add_argument('--sortdir', help=argparse.SUPPRESS)
+parser.add_argument('--sortby', nargs='+', help=argparse.SUPPRESS)
 parser.add_argument('--mfgrrx', help=argparse.SUPPRESS)
 parser.add_argument('--namerx', help=argparse.SUPPRESS)
 parser.add_argument('--speedrx', help=argparse.SUPPRESS)
@@ -301,8 +300,12 @@ if args.widthrx:
 
 finalfilter = ' & '.join(finalfilter)
 
-sortedcsv = csv.sort_values(by=['Turn'], ascending=[False])
-
-newcsv = 'print(tabulate(sortedcsv[' + finalfilter + '], disable_numparse=True, showindex=False, headers=csv.columns))'
-
-exec(newcsv)
+if args.sortby:
+    sortedcsv = csv.sort_values(by=args.sortby)
+    newcsv = 'print(tabulate(sortedcsv[' + finalfilter + '], disable_numparse=True, showindex=False, headers=csv.columns))'
+    exec(newcsv)
+    sys.exit(0)
+else:
+    newcsv = 'print(tabulate(csv[' + finalfilter + '], disable_numparse=True, showindex=False, headers=csv.columns))'
+    exec(newcsv)
+    sys.exit(0)

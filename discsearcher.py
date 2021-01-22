@@ -23,7 +23,7 @@ socket.setdefaulttimeout(300)
 
 # Version Information
 contact = 'discsearcher@icloud.com'
-vnum = 2021.020
+vnum = 2021.021
 version = f'''
 discsearcher v{vnum}
 \u00A9 2020 - Throw The Roller, LLC.
@@ -159,9 +159,13 @@ else:
     localcsvfile = csvfile.read()
     localread = localcsvfile.encode('ascii')
     localhash = hashlib.md5(localread)
-    remotecsvfile = requests.get('https://bitbucket.org/biscuits/discsearcher/downloads/discs.csv').text
-    remoteread = remotecsvfile.encode('ascii')
-    remotehash = hashlib.md5(remoteread)
+    try:
+        remotecsvfile = requests.get('https://bitbucket.org/biscuits/discsearcher/downloads/discs.csv').text
+        remoteread = remotecsvfile.encode('ascii')
+        remotehash = hashlib.md5(remoteread)
+    except:
+        remotehash = localhash
+        pass
 
 if localhash.hexdigest() != remotehash.hexdigest():
     print('Updating the local CSV file to current....')

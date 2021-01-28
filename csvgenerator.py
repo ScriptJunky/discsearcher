@@ -167,7 +167,7 @@ discdictionary = {
 mfgrs = []
 mfgrnames = []
 
-mainpage = requests.get(url).text
+mainpage = session.get(url).text
 soupf = soup(mainpage, 'lxml')
 
 for i in soupf.find_all('a', attrs={'href': re.compile("/category/")}):
@@ -183,7 +183,7 @@ df = pd.DataFrame(columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fa
 #df = pd.DataFrame(columns=['Manufacturer', 'Name', 'Speed', 'Glide', 'Turn', 'Fade', 'Diameter', 'Height', 'RimDepth', 'RimWidth', 'Plastics'])
 
 for i in mfgrnames:
-    idurl = requests.get(url + i).text
+    idurl = session.get(url + i).text
     soupf = soup(idurl, 'lxml')
     fixeditems = re.sub(r'\r\n.*pull-left', r'', str(soupf.find_all('h4')))
     fixeditems2 = fixeditems.split(',')
@@ -210,7 +210,7 @@ for i in mfgrnames:
         name = re.sub(r'\+$', '-', name)
         name = re.sub(r'--$', '-', name)
         dimurl = url + '/' + each[0] + '-' + name
-        discpage = requests.get(dimurl).text
+        discpage = session.get(dimurl).text
         soupf = soup(discpage, 'lxml')
         diameter = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblDiameter'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
         each.append(diameter)

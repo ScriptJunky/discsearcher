@@ -1,3 +1,4 @@
+import argparse
 import numpy as np
 import os
 import pandas as pd
@@ -7,6 +8,11 @@ import socket
 from bs4 import BeautifulSoup as soup
 from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--un', help=argparse.SUPPRESS)
+parser.add_argument('--pw', help=argparse.SUPPRESS)
+args = parser.parse_args()
 
 # Adding in some retry w/ backoff logic. Helps with slower chans.
 session = requests.Session()
@@ -232,3 +238,13 @@ df['Purchase Url'] = url + '/' + df['Manufacturer'] + '-' + df['Name'].replace(d
 df.drop_duplicates(inplace=True, ignore_index=True)
 
 df.to_csv('discs.csv', index=False)
+
+# Let's go ahead and ship it off to bitbucket
+uploadfile = {'files': open('discs.csv', 'rb')}
+credentials = {
+    'user': args.un,
+    'password': args.pw
+}
+
+url = 'https://api.bitbucket.org/2.0/repositories/biscuits/discsearcher/downloads'
+r = requests.post(url, auth=(args.un, args.pw), files=uploadfile)

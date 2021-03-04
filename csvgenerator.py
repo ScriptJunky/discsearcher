@@ -218,13 +218,25 @@ for i in mfgrnames:
         dimurl = url + '/' + each[0] + '-' + name
         discpage = session.get(dimurl).text
         soupf = soup(discpage, 'lxml')
-        diameter = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblDiameter'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+        try:
+            diameter = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblDiameter'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+        except:
+            diameter = 0
         each.append(diameter)
-        height = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblHeight'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+        try:
+            height = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblHeight'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+        except:
+            height = 0
         each.append(height)
-        rimdepth = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblRimDepth'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+        try:
+            rimdepth = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblRimDepth'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+        except:
+            rimdepth = 0
         each.append(rimdepth)
-        rimwidth = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblRimWidth'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+        try:
+            rimwidth = float(soupf.find('li', {'id': 'ContentPlaceHolder1_lblRimWidth'}).get_text().split(':')[1].lstrip().replace(' cm', ''))
+        except:
+            rimwidth = 0
         each.append(rimwidth)
 #        for x in soupf.find_all('a', {'class': 'btn btn-info btn-xs'}):
 #            plastics.append(x.get_text().rstrip())

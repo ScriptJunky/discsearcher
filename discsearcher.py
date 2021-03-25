@@ -23,7 +23,7 @@ socket.setdefaulttimeout(300)
 
 # Version Information
 contact = 'discsearcher@icloud.com'
-vnum = 2021.021
+vnum = 2021.083
 version = f'''
 discsearcher v{vnum}
 \u00A9 2020 - Throw The Roller, LLC.
@@ -84,7 +84,6 @@ parser.add_argument('--full', action='store_true', help=argparse.SUPPRESS)
 parser.add_argument('--manufacturers', action='store_true', help=argparse.SUPPRESS)
 parser.add_argument('--discnames', action='store_true', help=argparse.SUPPRESS)
 parser.add_argument('--update', action='store_true', help=argparse.SUPPRESS)
-parser.add_argument('--maritime', action='store_true', help=argparse.SUPPRESS)
 parser.add_argument('--mfgr', nargs='+', help=argparse.SUPPRESS)
 parser.add_argument('--name', nargs='+', help=argparse.SUPPRESS)
 parser.add_argument('--speed', nargs='+', help=argparse.SUPPRESS)
@@ -109,34 +108,11 @@ parser.add_argument('--depthrx', help=argparse.SUPPRESS)
 parser.add_argument('--widthrx', help=argparse.SUPPRESS)
 args = parser.parse_args()
 
-if args.maritime:
-    print('''
-        Please visit the link below for more information:
-        https://imli.org/international-maritime-law-treaties-and-legislative-instruments-registration/
-        #############################################################################
-        #(@@@@)                    (#########)                   (@@@@@@@@(@@@@@@@@@#
-        #@@@@@@)___                 (####)~~~   /\                ~~(@@@@@@@(@@@@@@@#
-        #@@@@@@@@@@)                 ~~~~      /::~-__               ~~~(@@@@@@@@)~~#
-        #@@@)~~~~~~                           /::::::/\                  ~~(@@@@)   #
-        #~~~                              O  /::::::/::~--,                 ~~~~    #
-        #                                 | /:::::/::::::/{                         #
-        #                 |\              |/::::/::::::/:::|                        #
-        #                |:/~\           ||:::/:::::/::::::|                        #
-        #               |,/:::\          ||/'::: /::::::::::|                       #
-        #              |#__--~~\        |'#::,,/::::::::: __|   ,,'`,               #
-        #             |__# :::::\       |-#"":::::::__--~~::| ,'     ',     ,,      #
-        #,    ,,     |____#~~~--\,'',.  |_#____---~~:::::::::|         ',','  ',    #
-        # '.,'  '.,,'|::::##~~~--\    `,||#|::::::_____----~~~|         ,,,     '.''#
-        #____________'----###__:::\_____||#|--~~~~::::: ____--~______,,''___________#
-        #^^^  ^^^^^   |#######\~~~^^O, | ### __-----~~~~_____########'  ^^^^  ^^^   #
-        #,^^^^^','^^^^,|#########\_||\__O###~_######___###########;' ^^^^  ^^^   ^^ #
-        #^^/\/^^^^/\/\^^|#######################################;'/\/\/^^^/\/^^^/\/^#
-        #   /\/\/\/\/\  /\|####################################'      /\/\/\/\/\    #
-        #\/\/\     /\/\/\  /\/\/\/\    /\/\/\/\/\   /\/\/\    /\/\/\/\      /\/\/\/\#
-        #spb\/\/\    /\/\/\/\    /\/\/\/\    /\/\/\/\   /\/\/\/\    /\/\/\/\/\      #
-        #############################################################################
-    ''')
-    sys.exit(0)
+
+for arg in vars(args):
+    if re.search(r'.*(\*|\?).*', str(getattr(args, arg))):
+        print(f'{arg}={getattr(args, arg)} -- WILDCARD CHARACTERS [?, *] ARE NOT SUPPORTED!')
+        sys.exit(1)
 
 if args.version:
     print(version)

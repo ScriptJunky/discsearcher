@@ -86,7 +86,7 @@ discdictionary = {
     'Chief OS': 'Chief-OS',
     'Classic Roc': 'Classic-Roc',
     'Claws': 'Talon-(Claws)',
-    'Code X': 'Code-X'
+    'Code X': 'Code-X',
     'Crank SS': 'Crank-SS',
     'D Model OS': 'D-Model-OS',
     'D Model S': 'D-Model-S',

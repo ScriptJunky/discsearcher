@@ -39,7 +39,6 @@ referral = '?tag=3c8c6529'
 
 # Some known disc name translations
 discdictionary = {
-    "DA'E": "DAE",
     '#1 Driver': 'No1-Driver',
     '#1 Flyer': 'No1-Flyer',
     '#1 Helix': 'No1-Helix',
@@ -141,6 +140,9 @@ discdictionary = {
     'Kaxe Z': 'Kaxe-Z',
     'King Cobra': 'King-Cobra',
     'Kon Tiki': 'Kon-Tiki',
+    'LED Driver': 'LED-Driver',
+    'LED Midrange': 'LED-Midrange',
+    'LED Putter': 'LED-Putter',
     'Luan': 'Lu',
     'Lucky 13': 'Lucky-13',
     'M Model OS': 'M-Model-OS',
@@ -154,6 +156,7 @@ discdictionary = {
     'Nordic Warrior': 'Nordic-Warrior',
     'Nuke OS': 'Nuke-OS',
     'Nuke SS': 'Nuke-SS',
+    'Odyssey Distance Driver': 'Odyssey-Distance-Driver',
     'Omega AP Big Bead': 'Omega-AP-Big-Bead',
     'Omega AP': 'Omega-AP',
     'Omega Big Bead': 'Omega-Big-Bead',
@@ -196,6 +199,7 @@ discdictionary = {
     'TD2 Fever': 'TD2-Fever',
     'TeeBird +': 'TeeBird-',
     'The Adder': 'The-Adder',
+    'The Adder': 'The-Adder',
     'The Baron': 'The-Baron',
     'The Count': 'The-Count',
     'The Duchess': 'The-Duchess',
@@ -208,7 +212,6 @@ discdictionary = {
     'Tyrannosaurus Rex': 'Tyrannosaurus-Rex',
     'Wall Cloud': 'Wall-Cloud',
     'War Horse': 'War-Horse',
-    'The Adder': 'The-Adder',
     'XD +': 'XD-',
     'Zion Driver': 'Zion-Driver',
 }

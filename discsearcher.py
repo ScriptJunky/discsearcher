@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import argparse
 import exrex
 import hashlib
@@ -21,9 +23,9 @@ session.mount('https://', adapter)
 # Setting socket level timeout
 socket.setdefaulttimeout(300)
 
-# Version Information
+# Version Information (date +%Y.%j)
 contact = 'discsearcher@icloud.com'
-vnum = 2021.083
+vnum = '2021.190'
 version = f'''
 discsearcher v{vnum}
 \u00A9 2020 - Throw The Roller, LLC.

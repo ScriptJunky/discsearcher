@@ -1,7 +1,7 @@
-numpy==1.21.0
-requests==2.25.1
-exrex==0.10.5
-pandas==1.2.4
-tabulate==0.8.9
-beautifulsoup4==4.9.3
-PyInstaller==4.3
+numpy
+requests
+exrex
+pandas
+tabulate
+beautifulsoup4
+PyInstaller

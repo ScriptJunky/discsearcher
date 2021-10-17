@@ -4,4 +4,3 @@ exrex
 pandas
 tabulate
 beautifulsoup4
-PyInstaller

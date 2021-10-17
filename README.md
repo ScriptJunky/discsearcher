@@ -1,4 +1,48 @@
+## discsearcher Documentation
+```
+{22:59}~/git/discsearcher:master ✓ ➭ ./discsearcher.py --help
+usage: discsearcher.py [-h]
 
+STANDARD FLAGS:
+--full           Print the full listing of discs (and their flight numbers) that Infinite Discs sells.
+--manufacturers  Print a list of all disc manufacturers available from Infinite Discs.
+--discnames      Print the list of disc names available from Infinite Discs.
+--version        Print version and exit.
+
+FILTERING (STANDARD FILTERS):
+--mfgr         Used to include discs by manufacturer                                      (--mfgr Innova, for example)
+--name         Used to include discs specifically by name                                 (--name Mamba, for example)
+--speed        Used to include discs with a specific speed                                (--speed 10, for example. Will only show 10.0 and not 10.1 - 10.9)
+--glide        Used to include discs with a specific glide                                (--glide 5, for example. Will only show 5.0 and not 5.1 - 5.9)
+--turn         Used to include discs with a specific turn                                 (--turn -5, for example. Will only show -5.0 and not -5.1 - -5.9)
+--fade         Used to include discs with a specific fade                                 (--fade 3, for example. Will only show 3.0 and not 3.1 - 3.9)
+--diam         Used to include discs with a specific diameter                             (--diam 21.5, for example. Will only show discs that have a diameter of 21.5cm)
+--height       Used to include discs with a specific height                               (--height 1.7, for example. Will only show discs that have a height of 1.7cm)
+--depth        Used to include discs with a specific rim depth                            (--depth 1.4, for example. Will only show discs that have a rim depth of 1.4cm)
+--width        Used to include discs with a specific rim width                            (--width 1.5, for example. Will only show discs that have a rim width of 1.5cm)
+
+FILTERING (REGULAR EXPRESSIONS):
+--mfgrrx       Used to search for multiple manufacturers by name, with a single call      (--mfgrrx '(MVP|Axiom|Streamline)', for example. Only discs made by MVP, Axiom, or Streamline will be matched.)
+--namerx       Used to search for multiple discs by name, with a single call              (--namerx '(Wave|Wraith|Aries)', for example. Only the Wave, Wraith, and Aries will be matched.)
+--speedrx      Used to search for multiple speeds and speed ranges, with a single call    (--speedrx '(10|11)\.[0-9]', for example. Speed between 10.0-11.9 will be matched.)
+--gliderx      Used to search for multiple glides and glide ranges, with a single call    (--gliderx '[56]\.[0-9]', for example. Glide between 5.0-6.9 will be matched.)
+--turnrx       Used to search for multiple turn and turn ranges, with a single call       (--turnrx '^-[3-5]\.[0-9]', for example. Turn ratings between -3.0 and -5.9 will be matched.)
+--faderx       Used to search for multiple fade and fade ranges, with a single call       (--faderx '^-[2-3]\.[0-9]', for example. Fade ratings between -2.0 and -3.9 will be matched.)
+--diamrx       Used to search for multiple diams and diam ranges, with a single call      (--diamrx '(20|21)\.\d', for example. Diameter between 20.0-21.9 will be matched.)
+--heightrx     Used to search for multiple heights and height ranges, with a single call  (--heightrx '1\.[0-9]', for example. Heights between 1.0-1.9 will be matched.)
+--depthrx      Used to search for multiple depth and depth ranges, with a single call     (--depthrx '1\.[0-9]', for example. Rim Depths between 1.0 and 1.9 will be matched.)
+--widthrx      Used to search for multiple width and width ranges, with a single call     (--widthrx '1\.[0-9]', for example. Rim Widths between 1.0 and 1.9 will be matched.)
+
+SORTING:
+--sortby       Used to define the orer in which the columns should be sorted              (--sortby Speed Turn, for example, will sort by discs by Speed and then Turn) 
+--sortorder    Used to set the sort order for each field selected in --sortby             (--sortorder desc asc, will sort the first sortby field in descending order, and the second in ascending order)
+
+*******ALL FILTERING FLAGS CAN BE COMPOUNDED, AS WELL AS MIXED\MATCHED TOGETHER IN A SINGLE QUERY*******
+
+optional arguments:
+  -h, --help  show this help message and exit
+{22:59}~/git/discsearcher:master ✓ ➭ 
+```
 
 ## Running discsearcher
 The manufacturers and discnames flags produce column values that are uniqued, and sorted, prior to output.

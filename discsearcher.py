@@ -13,7 +13,7 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 from tabulate import tabulate
 
-# Adding in some retry w/ backoff logic. Helps with slower chans.
+# Adding in some retry w/ backoff logic.
 session = requests.Session()
 retry = Retry(connect=5, backoff_factor=3)
 adapter = HTTPAdapter(max_retries=retry)

@@ -125,3 +125,46 @@ Innova          Monster   10.1     2.9      0.1     4.9     21.2        1.4     
 Yikun           Wei       10.1     5.0      -2.9    1.9     21.1        1.7       1.1         2.0         https://infinitediscs.com/Yikun-Wei?tag=3c8c6529
 {22:51}~/git/discsearcher:master ✗ ➭ 
 ```
+
+### Getting Disc Info of Discs With Speed 10.0-10.9, and Sorting Fastest to Slowest
+Limiting to 15 w/ head
+```
+{22:54}~/git/discsearcher:master ✗ ➭ ./discsearcher.py --speedrx '10\.\d' --sortby speed --sortorder desc | head -15
+Manufacturer             Name                  Speed    Glide    Turn    Fade    Diameter    Height    RimDepth    RimWidth    Purchase Url
+-----------------------  --------------------  -------  -------  ------  ------  ----------  --------  ----------  ----------  ----------------------------------------------------------------------------
+Prodigy                  H2 V2                 10.9     4.9      -0.2    2.4     21.4        1.6       1.2         2.0         https://infinitediscs.com/Prodigy-H2-V2?tag=3c8c6529
+Discmania                PDx                   10.9     4.0      -0.1    3.0     21.1        1.9       1.2         2.1         https://infinitediscs.com/Discmania-PDx?tag=3c8c6529
+Skyquest                 Medusa                10.9     5.0      -2.1    1.9     21.2        1.5       1.1         2.1         https://infinitediscs.com/Skyquest-Medusa?tag=3c8c6529
+Discmania                CD3                   10.9     5.0      -1.0    2.1     21.1        2.0       1.2         2.1         https://infinitediscs.com/Discmania-CD3?tag=3c8c6529
+Millennium               Astra                 10.9     5.1      -2.0    1.9     21.1        1.5       1.2         2.2         https://infinitediscs.com/Millennium-Astra?tag=3c8c6529
+Sune-Sport               Short Slacker         10.9     5.0      -1.3    1.9     21.0        1.4       1.2         2.1         https://infinitediscs.com/Sune-Sport-Short-Slacker?tag=3c8c6529
+Discraft                 Pulse                 10.9     3.9      0.0     3.0     21.2        1.7       1.3         2.1         https://infinitediscs.com/Discraft-Pulse?tag=3c8c6529
+Dynamic-Discs            Renegade              10.9     5.0      -2.1    2.6     21.1        1.7       1.1         2.1         https://infinitediscs.com/Dynamic-Discs-Renegade?tag=3c8c6529
+Prodigy                  H1 V2                 10.8     4.0      0.0     3.0     21.4        1.6       1.2         2.0         https://infinitediscs.com/Prodigy-H1-V2?tag=3c8c6529
+Westside                 Boatman               10.8     5.1      -0.1    2.1     21.4        1.9       1.3         2.2         https://infinitediscs.com/Westside-Boatman?tag=3c8c6529
+Prodigy                  H3 V2                 10.7     5.0      -1.0    2.1     21.3        1.8       1.2         2.0         https://infinitediscs.com/Prodigy-H3-V2?tag=3c8c6529
+Discraft                 Machete               10.6     3.7      0.2     3.9     21.1        1.6       1.1         2.1         https://infinitediscs.com/Discraft-Machete?tag=3c8c6529
+Gateway                  Ninja                 10.6     4.9      -0.1    2.1     21.0        1.9       1.2         2.0         https://infinitediscs.com/Gateway-Ninja?tag=3c8c6529
+{22:55}~/git/discsearcher:master ✗ ➭ 
+```
+
+Limiting to last 15 w/ tail
+```
+{22:57}~/git/discsearcher:master ✗ ➭ ./discsearcher.py --speedrx '10\.\d' --sortby speed --sortorder desc | tail -15
+Prodigy                  F Model S             10.0     4.9      0.3     2.9     21.0        1.5       1.2         2.0         https://infinitediscs.com/Prodigy-F-Model-S?tag=3c8c6529
+Prodigy                  F Model OS            10.0     5.0      1.4     3.6     21.3        1.5       1.1         2.1         https://infinitediscs.com/Prodigy-F-Model-OS?tag=3c8c6529
+Mint-Discs               Freetail              10.0     6.0      -3.2    1.8     21.1        1.7       1.2         2.0         https://infinitediscs.com/Mint-Discs-Freetail?tag=3c8c6529
+Millennium               Aquarius              10.0     5.1      -3.7    1.8     21.0        1.9       1.2         2.0         https://infinitediscs.com/Millennium-Aquarius?tag=3c8c6529
+MVP                      Tesla                 10.0     4.6      -0.6    2.3     21.0        1.4       1.2         2.0         https://infinitediscs.com/MVP-Tesla?tag=3c8c6529
+MVP                      Impulse               10.0     4.9      -2.9    1.1     21.1        1.4       1.2         2.0         https://infinitediscs.com/MVP-Impulse?tag=3c8c6529
+DGA                      Undertow              10.0     4.1      -1.0    1.1     21.2        1.5       1.2         1.8         https://infinitediscs.com/DGA-Undertow?tag=3c8c6529
+Discmania                TD                    10.0     5.8      -1.8    1.1     21.2        1.6       1.1         1.9         https://infinitediscs.com/Discmania-TD-Rush?tag=3c8c6529
+Skyquest                 Lucky 13              10.0     5.0      -3.0    2.0     21.2        1.5       1.1         2.1         https://infinitediscs.com/Skyquest-Lucky-13?tag=3c8c6529
+Latitude-64              Musket                10.0     4.9      -0.7    2.2     21.2        1.8       1.1         2.0         https://infinitediscs.com/Latitude-64-Musket?tag=3c8c6529
+Discmania                CD                    10.0     4.8      -0.9    2.0     21.2        1.3       1.1         1.9         https://infinitediscs.com/Discmania-CD-Craze?tag=3c8c6529
+Dino-Discs               Pterodactylus         10.0     5.0      -3.3    1.1     21.1        2.0       1.1         1.9         https://infinitediscs.com/Dino-Discs-Pterodactylus?tag=3c8c6529
+Kaufinator-Discs         Kaufinator Vengeance  10.0     5.0      0.0     2.0     21.1        1.7       1.7         2.0         https://infinitediscs.com/Kaufinator-Discs-Kaufinator Vengeance?tag=3c8c6529
+Kaufinator-Discs         Kaufinator Nemesis    10.0     6.0      -4.0    2.0     21.3        1.5       1.1         2.0         https://infinitediscs.com/Kaufinator-Discs-Kaufinator-Nemesis?tag=3c8c6529
+RPM-Discs                Taniwha               10.0     5.0      -2.1    1.8     21.1        1.4       1.2         2.0         https://infinitediscs.com/RPM-Discs-Taniwha?tag=3c8c6529
+{22:57}~/git/discsearcher:master ✗ ➭ 
+```

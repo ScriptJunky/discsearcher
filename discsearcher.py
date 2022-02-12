@@ -3,6 +3,7 @@
 import argparse
 import exrex
 import hashlib
+import io
 import os
 import pandas as pd
 import re
@@ -23,9 +24,10 @@ session.mount('https://', adapter)
 # Setting socket level timeout
 socket.setdefaulttimeout(300)
 
-# Version Information (date +%Y.%j)
+# Version Information
+# (uses "date +%Y.%j" format)
 contact = 'discsearcher@icloud.com'
-vnum = '2021.190'
+vnum = '2022.043'
 version = f'''
 discsearcher v{vnum}
 \u00A9 2020 - Throw The Roller, LLC.
@@ -80,35 +82,75 @@ SORTING:
 *******ALL FILTERING FLAGS CAN BE COMPOUNDED, AS WELL AS MIXED\MATCHED TOGETHER IN A SINGLE QUERY*******
 '''
 
-parser = argparse.ArgumentParser(description=regexaddendum, formatter_class=argparse.RawTextHelpFormatter)
-parser.add_argument('--version', action='store_true', help=argparse.SUPPRESS)
-parser.add_argument('--full', action='store_true', help=argparse.SUPPRESS)
-parser.add_argument('--manufacturers', action='store_true', help=argparse.SUPPRESS)
-parser.add_argument('--discnames', action='store_true', help=argparse.SUPPRESS)
-parser.add_argument('--update', action='store_true', help=argparse.SUPPRESS)
-parser.add_argument('--mfgr', nargs='+', help=argparse.SUPPRESS)
-parser.add_argument('--name', nargs='+', help=argparse.SUPPRESS)
-parser.add_argument('--speed', nargs='+', help=argparse.SUPPRESS)
-parser.add_argument('--glide', nargs='+', help=argparse.SUPPRESS)
-parser.add_argument('--turn', nargs='+', help=argparse.SUPPRESS)
-parser.add_argument('--fade', nargs='+', help=argparse.SUPPRESS)
-parser.add_argument('--diam', nargs='+', help=argparse.SUPPRESS)
-parser.add_argument('--height', nargs='+', help=argparse.SUPPRESS)
-parser.add_argument('--depth', nargs='+', help=argparse.SUPPRESS)
-parser.add_argument('--width', nargs='+', help=argparse.SUPPRESS)
-parser.add_argument('--sortby', nargs='+', help=argparse.SUPPRESS)
-parser.add_argument('--sortorder', nargs='+', help=argparse.SUPPRESS)
-parser.add_argument('--mfgrrx', help=argparse.SUPPRESS)
-parser.add_argument('--namerx', help=argparse.SUPPRESS)
-parser.add_argument('--speedrx', help=argparse.SUPPRESS)
-parser.add_argument('--gliderx', help=argparse.SUPPRESS)
-parser.add_argument('--turnrx', help=argparse.SUPPRESS)
-parser.add_argument('--faderx', help=argparse.SUPPRESS)
-parser.add_argument('--diamrx', help=argparse.SUPPRESS)
-parser.add_argument('--heightrx', help=argparse.SUPPRESS)
-parser.add_argument('--depthrx', help=argparse.SUPPRESS)
-parser.add_argument('--widthrx', help=argparse.SUPPRESS)
+parser = argparse.ArgumentParser(description=regexaddendum, 
+                                 formatter_class=argparse.RawTextHelpFormatter,
+                                 add_help=argparse.SUPPRESS
+)
+
+parser.add_argument('--version', action='store_true')
+parser.add_argument('--full', action='store_true')
+parser.add_argument('--manufacturers', action='store_true')
+parser.add_argument('--discnames', action='store_true')
+parser.add_argument('--update', action='store_true')
+parser.add_argument('--mfgr', nargs='+')
+parser.add_argument('--name', nargs='+')
+parser.add_argument('--speed', nargs='+')
+parser.add_argument('--glide', nargs='+')
+parser.add_argument('--turn', nargs='+')
+parser.add_argument('--fade', nargs='+')
+parser.add_argument('--diam', nargs='+')
+parser.add_argument('--height', nargs='+')
+parser.add_argument('--depth', nargs='+')
+parser.add_argument('--width', nargs='+')
+parser.add_argument('--sortby', nargs='+')
+parser.add_argument('--sortorder', nargs='+')
+parser.add_argument('--mfgrrx')
+parser.add_argument('--namerx')
+parser.add_argument('--speedrx')
+parser.add_argument('--gliderx')
+parser.add_argument('--turnrx')
+parser.add_argument('--faderx')
+parser.add_argument('--diamrx')
+parser.add_argument('--heightrx')
+parser.add_argument('--depthrx')
+parser.add_argument('--widthrx')
 args = parser.parse_args()
+
+def csvupdate():
+    csvdata = requests.get('https://bitbucket.org/biscuits/discsearcher/downloads/discs.csv').text
+    with io.open('discs.csv', 'w', encoding='utf-8') as csvfile:
+        csvfile.write(csvdata)
+        csvfile.close()
+        print(updatesuccess)
+        sys.exit(0)
+
+def hashcompare():
+    if os.path.exists('discs.csv'):
+        csvfile = io.open('discs.csv', 'r', encoding='utf-8')
+        localcsvfile = csvfile.read()
+        localread = localcsvfile.encode('utf-8')
+        localhash = hashlib.md5(localread)
+        try:
+            remotecsvfile = requests.get('https://bitbucket.org/biscuits/discsearcher/downloads/discs.csv').text
+            remoteread = remotecsvfile('utf-8')
+            remotehash = hashlib.md5(remoteread)
+        except:
+            remotehash = localhash
+
+    if localhash.hexdigest() != remotehash.hexdigest():
+        print('Updating the local CSV file to current....')
+        os.remove('discs.csv')
+        with io.open('discs.csv', 'w', encoding='utf-8') as csvcreate:
+            csvcreate.write(remotecsvfile)
+            csvcreate.close()
+            print(updatesuccess)
+            sys.exit(0)
+
+
+if not os.path.exists('discs.csv'):
+    csvupdate()
+else:
+    hashcompare()
 
 
 for arg in vars(args):
@@ -118,40 +160,6 @@ for arg in vars(args):
 
 if args.version:
     print(version)
-    sys.exit(0)
-
-if not os.path.exists('discs.csv'):
-    print('The discs.csv file is missing! Downloading the latest copy....')
-    try:
-        csvdata = requests.get('https://bitbucket.org/biscuits/discsearcher/downloads/discs.csv').text
-        csvfile = open('discs.csv', 'w')
-        csvfile.write(csvdata)
-        csvfile.close()
-    except:
-        print(updateissue)
-        sys.exit(1)
-    print(updatesuccess)
-    sys.exit(0)
-else:
-    csvfile = open('discs.csv', 'r')
-    localcsvfile = csvfile.read()
-    localread = localcsvfile.encode('ascii')
-    localhash = hashlib.md5(localread)
-    try:
-        remotecsvfile = requests.get('https://bitbucket.org/biscuits/discsearcher/downloads/discs.csv').text
-        remoteread = remotecsvfile.encode('ascii')
-        remotehash = hashlib.md5(remoteread)
-    except:
-        remotehash = localhash
-        pass
-
-if localhash.hexdigest() != remotehash.hexdigest():
-    print('Updating the local CSV file to current....')
-    os.remove('discs.csv')
-    csvcreate = open('discs.csv', 'w')
-    csvcreate.write(remotecsvfile)
-    csvcreate.close()
-    print(updatesuccess)
     sys.exit(0)
 
 
